@@ -1,0 +1,58 @@
+{
+  "extends": "airbnb-base",
+  "plugins": [
+      "import"
+  ],
+  "rules": {
+    // 모든 스크립트에서 strict 재선언 허용
+    "strict": "off",
+    // 지역 스코프에서 require 선언 가능
+    "global-require": "off",
+    // ++ 연산을 허용(세미콜론 처리에 주의)
+    "no-plusplus": 0,
+    // 함수내에서 매개변수의 값을 직접 변경하도록 허용 (express의 req 파라미터에서만 재할당하는 것을 권장)
+    "no-param-reassign": 0,
+    // 익명함수 허용
+    "func-names": 0,
+    // 일부 변수에 대해 언더스코어로 시작 허용
+    "no-underscore-dangle": [
+      2,
+      {
+        "allowAfterThis": false,
+        "allow": [
+          "_id",
+          "__v"
+        ]
+      }
+    ],
+    // 매개변수는 사용하지 않아도 되도록 허용
+    "no-unused-vars": [
+      2,
+      {
+        "vars": "all",
+        "args": "none"
+      }
+    ],
+    // 최대 한줄 코드 길이 설정
+    "max-len": [
+      "error",
+      {
+        "ignoreComments": true,
+        "code": 120
+      }
+    ],
+    // integration, spec 파일에서 devDependencies 참조 허용
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": [
+          "!**.*.(integration|spec).js"
+        ]
+      }
+    ],
+    // 동적 참조에 대해 경고만 띄우도록 변경
+    "import/no-dynamic-require": 1,
+    // require 이후 빈줄을 추가하지 않아도 되도록 변경
+    "import/newline-after-import": 0
+  }
+}
