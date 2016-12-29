@@ -1,8 +1,12 @@
 'use strict';
 
-const app = require('./app.js');
+const winston = require('winston');
+const ENV = require('./config/environment.constants').ENV;
 
+const DEVELOPMENT = ENV.DEVELOPMENT;
 
-app.listen(3000);
+process.env.NODE_ENV = process.env.NODE_ENV || DEVELOPMENT;
 
-console.log('Start Server');
+require('./app.js');
+
+winston.info('Start Server');
