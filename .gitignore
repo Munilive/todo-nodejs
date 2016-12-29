@@ -102,8 +102,4 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-server/components/ 제거할 예정
-server/config/ 제거할 예정
-server/constants/ 제거할 예정
-server/model/ 제거할 예정
-server/provider/ 제거할 예정
+.env

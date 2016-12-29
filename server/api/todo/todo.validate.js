@@ -59,7 +59,8 @@ function checkContext(context) {
 
 /**
  * 날짜 데이터 타입 유효성 체크
- * @param date
+ * @param {Date} date - 날짜
+ * @param {string} fieldName - 필드명
  */
 function checkDateType(date, fieldName) {
   if (!_.isNil(date)) {
@@ -89,25 +90,32 @@ module.exports = {
 
   /**
    * 할일 생성 유효성 검사
-   * @param {Object} todo
+   * @param {Object} todoData
+   * @param {string} todoData.title
+   * @param {string} todoData.status
+   * @param {string} todoData.context
+   * @param {Date} todoData.dueDate
    */
-  checkCreateTodo(todo) {
-    checkTitle(todo.title);
-    checkStatus(todo.status);
-    checkContext(todo.context);
-    checkDateType(todo.dueDate, 'dueDate');
+  checkCreateTodo(todoData) {
+    checkTitle(todoData.title);
+    checkStatus(todoData.status);
+    checkContext(todoData.context);
+    checkDateType(todoData.dueDate, 'dueDate');
   },
 
   /**
    * 할일 수정 유효성 검사
    * @param {ObjectId|String} todoId
-   * @param {Object} todo
+   * @param {Object} todoData
+   * @param {string} todoData.status
+   * @param {string} todoData.context
+   * @param {Date} todoData.dueDate
    */
-  checkUpdateTodo(todoId, todo) {
+  checkUpdateTodo(todoId, todoData) {
     checkId(todoId);
-    checkStatus(todo.status);
-    checkContext(todo.context);
-    checkDateType(todo.dueDate, 'dueDate');
+    checkStatus(todoData.status);
+    checkContext(todoData.context);
+    checkDateType(todoData.dueDate, 'dueDate');
   },
 
   /**
