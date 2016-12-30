@@ -8,11 +8,11 @@ const Todo = rootRequire('server/model/todo.model');
 const DEFAULT_SELECT = '-__v';
 
 function getStartDate(date) {
-  return new Date(date + ' 00:00:00');
+  return new Date(`${date} 00:00:00`);
 }
 
 function getEndDate(date) {
-  return new Date(date + ' 23:59:59');
+  return new Date(`${date} 23:59:59`);
 }
 
 /**
@@ -51,35 +51,59 @@ module.exports = class TodoProvider extends BaseProvider {
    * @returns {TodoProvider}
    */
   todoSearch(fields) {
+    const andQuery = [];
+
     if (_.isNil(fields.title) === false) {
-      this.conditions.title = new RegExp(fields.title, 'gi');
+      andQuery.push({ title: new RegExp(fields.title, 'i') });
+      // this.conditions.title = new RegExp(fields.title, 'i');
     }
     if (_.isNil(fields.status) === false) {
-      this.conditions.status = fields.status;
+      andQuery.push({ status: fields.status });
+      // this.conditions.status = fields.status;
     }
     if (_.isNil(fields.context) === false) {
-      this.conditions.context = fields.context;
+      andQuery.push({ context: fields.context });
+      // this.conditions.context = fields.context;
     }
 
     if (_.isNil(fields.startDueDate) === false && _.isNil(fields.endDueDate) === false) {
-      this.conditions.dueDate = {
+      andQuery.push({ dueDate: {
         $gte: getStartDate(fields.startDueDate),
         $lte: getEndDate(fields.endDueDate),
-      };
+      },
+      });
+      // this.conditions.dueDate = {
+      //   $gte: getStartDate(fields.startDueDate),
+      //   $lte: getEndDate(fields.endDueDate),
+      // };
     }
 
     if (_.isNil(fields.startDoneAt) === false && _.isNil(fields.endDueDate) === false) {
-      this.conditions.doneAt = {
+      andQuery.push({ doneAt: {
         $gte: getStartDate(fields.startDoneAt),
         $lte: getEndDate(fields.endDoneAt),
-      };
+      },
+      });
+      // this.conditions.doneAt = {
+      //   $gte: getStartDate(fields.startDoneAt),
+      //   $lte: getEndDate(fields.endDoneAt),
+      // };
     }
 
     if (_.isNil(fields.startCreatedAt) === false && _.isNil(fields.endCreatedAt) === false) {
-      this.conditions.createdAt = {
+      andQuery.push({ createdAt: {
         $gte: getStartDate(fields.startCreatedAt),
         $lte: getEndDate(fields.endCreatedAt),
-      };
+      },
+      });
+      // this.conditions.createdAt = {
+      //   $gte: getStartDate(fields.startCreatedAt),
+      //   $lte: getEndDate(fields.endCreatedAt),
+      // };
+    }
+
+    if (andQuery.length > 0) {
+      this.conditions = { $and: andQuery };
     }
     return this;
   }

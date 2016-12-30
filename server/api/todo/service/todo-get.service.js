@@ -17,6 +17,7 @@ const TodoProvider = rootRequire('server/provider/todo/todo.provider');
 function getTodo(todoId) {
   return new TodoProvider()
     .todoId(todoId)
+    .select('title status context dueDate createdAt doneAt') // 이거 넣어도 없는 필드는 안나옴
     .singleResult(true)
     .lean()
     .exec();
