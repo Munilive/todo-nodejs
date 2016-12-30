@@ -25,6 +25,4 @@ module.exports = (app) => {
   });
 
   app.route(config.healthCheck).get(response.sendOK);
-
-  winston.info('route start');
 };

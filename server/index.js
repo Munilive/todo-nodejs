@@ -8,5 +8,3 @@ const DEVELOPMENT = ENV.DEVELOPMENT;
 process.env.NODE_ENV = process.env.NODE_ENV || DEVELOPMENT;
 
 require('./app.js');
-
-winston.info('Start Server');

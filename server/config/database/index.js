@@ -3,10 +3,11 @@
 const winston = require('winston');
 const mongoose = require('mongoose');
 mongoose.Promise = Promise;
+const config = require('../environment');
 
 // mongoose.connect('mongodb://localhost/node-study');
 // const connection = mongoose.connection;
-const connection = mongoose.createConnection('mongodb://localhost/node-study');
+const connection = mongoose.createConnection(config.db.uri, config.db.options);
 
 connection.on('connecting', (arg1, arg2) => {
   winston.info('database connecting');

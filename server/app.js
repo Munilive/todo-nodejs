@@ -9,7 +9,7 @@ const app = express();
 
 require('./routes')(app);
 
-app.listen(3000);
+app.listen(config.port);
 
-winston.info('load app.js');
+winston.info(`Start Express Server listening on ${config.port}, in ${app.get('env')} mode`);
 module.exports = app;

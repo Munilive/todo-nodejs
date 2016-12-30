@@ -14,7 +14,7 @@ const serverEnv = {
   ip: process.env.IP || undefined,
 
   // 서버 포트
-  port: process.env.PORT || 3000,
+  port: process.env.PORT || 8080,
 
   // 헬스체크 경로 로그밸런서에서 헬스 체크를 위해 사용하는 것으로 판단됨
   healthCheck: process.env.HEALTH_CHECK_URL || '/health',
@@ -22,15 +22,15 @@ const serverEnv = {
   // 기준 시간대
   timezone: process.env.TZ || 'Asia/Seoul',
 
-  // 똑닥 서비스 데이터베이스(MongoDB) 접속정보
-  ddocdocDb: {
-    uri: process.env.DDOCDOC_DB_URI,
+  // 데이터베이스(MongoDB) 접속정보
+  db: {
+    uri: process.env.DB_URI,
     options: {
       db: {
         safe: true,
       },
       server: {
-        poolSize: process.env.DDOCDOC_DB_POOL_SIZE || 5,
+        poolSize: process.env.DB_POOL_SIZE || 5,
       },
     },
   },
