@@ -31,22 +31,29 @@ function getTodo(todoId) {
 function buildUpdateSet(todoData) {
   const clonedBody = _.cloneDeep(todoData);
   const updateSet = {};
+  const fields = ['title', 'context', 'status', 'dueDate'];
 
-  if (_.isNil(clonedBody.title) === false) {
-    updateSet.title = clonedBody.title;
-  }
+  fields.forEach((field) => {
+    if (_.isNil(clonedBody[field]) === false) {
+      updateSet[field] = clonedBody[field];
+    }
+  });
 
-  if (_.isNil(clonedBody.context) === false) {
-    updateSet.context = clonedBody.context;
-  }
-
-  if (_.isNil(clonedBody.status) === false) {
-    updateSet.status = clonedBody.status;
-  }
-
-  if (_.isNil(clonedBody.dueDate) === false) {
-    updateSet.dueDate = clonedBody.dueDate;
-  }
+  // if (_.isNil(clonedBody.title) === false) {
+  //   updateSet.title = clonedBody.title;
+  // }
+  //
+  // if (_.isNil(clonedBody.context) === false) {
+  //   updateSet.context = clonedBody.context;
+  // }
+  //
+  // if (_.isNil(clonedBody.status) === false) {
+  //   updateSet.status = clonedBody.status;
+  // }
+  //
+  // if (_.isNil(clonedBody.dueDate) === false) {
+  //   updateSet.dueDate = clonedBody.dueDate;
+  // }
 
   if (clonedBody.status === 'done' && _.isNil(clonedBody.doneAt)) {
     updateSet.doneAt = Date.now();

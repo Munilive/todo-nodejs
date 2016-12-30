@@ -36,6 +36,10 @@ module.exports = class TodoProvider extends BaseProvider {
     return this;
   }
 
+  title(title) {
+    this.conditions.title = new RegExp(title, 'i');
+  }
+
   /**
    * 할일 검색
    * @param {Object} fields

@@ -22,12 +22,13 @@ function createTodo(doc) {
  */
 function buildDoc(body) {
   const clonedBody = _.cloneDeep(body);
-  return {
-    title: clonedBody.title,
-    status: clonedBody.status,
-    context: clonedBody.context,
-    dueDate: clonedBody.dueDate,
-  };
+  const fields = ['title', 'status', 'context', 'dueDate'];
+  const createSet = {};
+
+  fields.forEach((field) => {
+    createSet[field] = clonedBody[field];
+  });
+  return createSet;
 }
 
 module.exports.exec = (body) => {
