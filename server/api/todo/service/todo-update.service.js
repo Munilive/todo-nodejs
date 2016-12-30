@@ -29,10 +29,29 @@ function getTodo(todoId) {
  * @returns {Object}
  */
 function buildUpdateSet(todoData) {
-  if (todoData.status === 'done' && _.isNil(todoData.doneAt)) {
-    todoData.doneAt = Date.now();
+  const clonedBody = _.cloneDeep(todoData);
+  const updateSet = {};
+
+  if (_.isNil(clonedBody.title) === false) {
+    updateSet.title = clonedBody.title;
   }
-  return todoData;
+
+  if (_.isNil(clonedBody.context) === false) {
+    updateSet.context = clonedBody.context;
+  }
+
+  if (_.isNil(clonedBody.status) === false) {
+    updateSet.status = clonedBody.status;
+  }
+
+  if (_.isNil(clonedBody.dueDate) === false) {
+    updateSet.dueDate = clonedBody.dueDate;
+  }
+
+  if (clonedBody.status === 'done' && _.isNil(clonedBody.doneAt)) {
+    updateSet.doneAt = Date.now();
+  }
+  return updateSet;
 }
 
 /**
@@ -64,10 +83,7 @@ module.exports.exec = (todoId, todoData) => {
       throw new NotFoundError(todoMessage.NOT_FOUND_TODO);
     }
 
-    const clonedBody = _.cloneDeep(todoData);
-    delete clonedBody._id;
-
-    const updateSet = buildUpdateSet(clonedBody);
+    const updateSet = buildUpdateSet(todoData);
     return yield updateTodo(todoId, updateSet);
   });
 };

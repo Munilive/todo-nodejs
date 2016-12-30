@@ -13,6 +13,7 @@ const validate = require('../todo.validate');
  */
 function getTodos(conditions) {
   return new TodoProvider()
+    .todoSearch(conditions.field)
     .skip(conditions.skip)
     .limit(conditions.limit)
     .sort(conditions.sort)
@@ -21,10 +22,11 @@ function getTodos(conditions) {
 
 /**
  * 할일 카운트 리턴
+ * @param conditions
  * @returns {*|Query}
  */
-function getTodoCount() {
-  return new TodoProvider().count();
+function getTodoCount(conditions) {
+  return new TodoProvider().todoSearch(conditions).count();
 }
 /**
  * 검색 조건 빌드
@@ -34,9 +36,20 @@ function getTodoCount() {
 function buildConditions(query) {
   const clonedQuery = _.cloneDeep(query) || {};
   return {
+    field: {
+      title: clonedQuery.title,
+      status: clonedQuery.status,
+      context: clonedQuery.context,
+      startDueDate: clonedQuery.startDueDate,
+      endDueDate: clonedQuery.endDueDate,
+      startDoneAt: clonedQuery.startDoneAt,
+      endDoneAt: clonedQuery.endDoneAt,
+      startCreatedAt: clonedQuery.startCreatedAt,
+      endCreatedAt: clonedQuery.endCreatedAt,
+    },
     skip: clonedQuery.skip || 0,
     limit: clonedQuery.limit || 10,
-    sort: clonedQuery.sort || 'dueDate -createdAt',
+    sort: clonedQuery.sort || '-createdAt',
   };
 }
 
@@ -51,7 +64,7 @@ function getTodoPage(conditions) {
 
     return yield {
       items: todoQuery.exec(),
-      totalCount: getTodoCount(),
+      totalCount: getTodoCount(conditions.field),
       skip: todoQuery.skipCnt,
       limit: todoQuery.limitCnt,
       sort: todoQuery.sortField,

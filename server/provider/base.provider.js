@@ -35,7 +35,7 @@ module.exports = class BaseProvider {
 
   /**
    * 정렬
-   * @param {string} fields - 정렬할 필드명
+   * @param {Object|string} fields - 정렬할 필드명
    * @returns {BaseProvider}
    */
   sort(fields) {
@@ -141,7 +141,7 @@ module.exports = class BaseProvider {
       promise.lean();
     }
 
-    if (_.isNil(this.sortField)) {
+    if (_.isNil(this.sortField) === false) {
       promise.sort(this.sortField);
     }
 

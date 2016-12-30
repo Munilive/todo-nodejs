@@ -59,25 +59,64 @@ function checkContext(context) {
 
 /**
  * 날짜 데이터 타입 유효성 체크
- * @param {Date} date - 날짜
+ * @param {string} date - 날짜
  * @param {string} fieldName - 필드명
  */
 function checkDateType(date, fieldName) {
   if (!_.isNil(date)) {
-    if (!lang.isDateString(date) && !lang.isDatetimeString(date)) {
+    if (!lang.isDateString(date) ) {
       throw new EntityError(commonMessage.WRONG_DATA_TYPE, fieldName);
     }
+  }
+}
+
+/**
+ * Datetime 형식 유효성 체크
+ * @param {string} datetime
+ * @param fieldName
+ */
+function checkDatetimeType(datetime, fieldName) {
+  if (!_.isNil(datetime) && !lang.isDatetimeString(datetime)) {
+    throw new EntityError(commonMessage.WRONG_DATA_TYPE, fieldName);
+  }
+}
+
+/**
+ * 필드에 내용이 없을 경우
+ * @param {Object} fields
+ */
+function checkParameterLength(fields) {
+  if (_.isObject(fields) && Object.keys(fields).length === 0) {
+    throw new EntityError(commonMessage.EMPTY_PARAMETER);
   }
 }
 
 module.exports = {
   /**
    * 할일 목록 조회 유효성 검사
-   * @param {Object} query
+   * @param {Object}  query
+   * @param {number}  query.skip
+   * @param {number}  query.limit
+   * @param {string}  query.context
+   * @param {string}  query.status
+   * @param {Date}    query.startDueDate
+   * @param {Date}    query.endDueDate
+   * @param {Date}    query.startDoneAt
+   * @param {Date}    query.endDoneAt
+   * @param {Date}    query.startCreatedAt
+   * @param {Date}    query.endCreatedAt
    */
   checkListTodo(query) {
     commonValidate.checkSkip(query.skip);
     commonValidate.checkLimit(query.limit);
+    checkContext(query.context);
+    checkStatus(query.status);
+    checkDateType(query.startDueDate, 'startDueDate');
+    checkDateType(query.endDueDate, 'endDueDate');
+    checkDateType(query.startDoneAt, 'startDoneAt');
+    checkDateType(query.endDoneAt, 'endDoneAt');
+    checkDateType(query.startCreatedAt, 'startCreatedAt');
+    checkDateType(query.endCreatedAt, 'endCreatedAt');
   },
 
   /**
@@ -116,6 +155,7 @@ module.exports = {
     checkStatus(todoData.status);
     checkContext(todoData.context);
     checkDateType(todoData.dueDate, 'dueDate');
+    checkParameterLength(todoData);
   },
 
   /**

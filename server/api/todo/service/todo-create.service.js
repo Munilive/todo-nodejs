@@ -8,11 +8,11 @@ const Todo = rootRequire('server/model/todo.model');
 
 /**
  * 할일 생성
- * @param {Object} todoData
- * @returns {todoData}
+ * @param {Object} doc
+ * @returns {*|Query}
  */
-function createTodo(todoData) {
-  return Todo.create(todoData);
+function createTodo(doc) {
+  return Todo.create(doc);
 }
 
 /**
@@ -25,7 +25,7 @@ function buildDoc(body) {
   return {
     title: clonedBody.title,
     status: clonedBody.status,
-    content: clonedBody.context,
+    context: clonedBody.context,
     dueDate: clonedBody.dueDate,
   };
 }
