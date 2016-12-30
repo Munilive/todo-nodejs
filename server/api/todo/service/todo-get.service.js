@@ -7,7 +7,7 @@ const rootRequire = require('root-require');
 const todoValidate = require('../todo.validate');
 const todoMessage = rootRequire('server/constants/todo.message');
 const NotFoundError = rootRequire('server/components/error').NotFoundError;
-const Todo = rootRequire('server/model/todo.model');
+const TodoProvider = rootRequire('server/provider/todo/todo.provider');
 
 /**
  * 할일 가져오기
@@ -15,7 +15,11 @@ const Todo = rootRequire('server/model/todo.model');
  * @returns {*}
  */
 function getTodo(todoId) {
-  return Todo.findOne({ _id: todoId });
+  return new TodoProvider()
+    .todoId(todoId)
+    .singleResult(true)
+    .lean()
+    .exec();
 }
 
 module.exports.exec = (todoId) => {
