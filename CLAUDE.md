@@ -71,7 +71,7 @@ pnpm --filter @todo-nodejs/server dev:api       # 직접 실행
 pnpm --filter @todo-nodejs/server build:api     # nest build api (SWC)
 
 # 프로덕션 실행
-pnpm --filter @todo-nodejs/server start:api     # node api/dist/api/src/main.js
+pnpm --filter @todo-nodejs/server start:api     # node dist/api/src/main.js
 ```
 
 ## 로컬 개발 환경 설정
