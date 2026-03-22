@@ -4,7 +4,7 @@ import { PostgreSqlDriver } from '@mikro-orm/postgresql';
 import { defineConfig } from '@mikro-orm/core';
 import { TodoSchema } from '@app/domain';
 
-config({ path: resolve(__dirname, '.env') });
+config({ path: resolve(process.cwd(), 'api/.env') });
 
 export default defineConfig({
   driver: PostgreSqlDriver,
