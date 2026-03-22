@@ -10,13 +10,12 @@
     "test": "vitest run --config api/vitest.config.ts",
     "test:watch": "vitest --config api/vitest.config.ts",
     "test:coverage": "vitest run --coverage --config api/vitest.config.ts",
-    "migration:create": "mikro-orm --config api/mikro-orm.config.ts migration:create",
-    "migration:up": "mikro-orm --config api/mikro-orm.config.ts migration:up",
-    "migration:down": "mikro-orm --config api/mikro-orm.config.ts migration:down"
+    "migration:create": "mikro-orm migration:create",
+    "migration:up": "mikro-orm migration:up",
+    "migration:down": "mikro-orm migration:down"
   },
   "mikro-orm": {
-    "useTsNode": true,
-    "tsConfigPath": "tsconfig.json"
+    "configPaths": ["api/mikro-orm.config.ts"]
   },
   "dependencies": {
     "@mikro-orm/core": "^7.0.4",
@@ -39,6 +38,8 @@
     "rxjs": "^7.8.2"
   },
   "devDependencies": {
+    "@mikro-orm/cli": "^7.0.4",
+    "@swc-node/register": "^1.10.9",
     "@munilive/tsconfig": "^1.0.0",
     "@nestjs/cli": "^11.0.0",
     "@nestjs/testing": "^11.1.17",

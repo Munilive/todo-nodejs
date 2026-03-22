@@ -1,6 +1,10 @@
+import { config } from 'dotenv';
+import { resolve } from 'path';
 import { PostgreSqlDriver } from '@mikro-orm/postgresql';
 import { defineConfig } from '@mikro-orm/core';
 import { TodoSchema } from '@app/domain';
+
+config({ path: resolve(__dirname, '.env') });
 
 export default defineConfig({
   driver: PostgreSqlDriver,
@@ -11,7 +15,6 @@ export default defineConfig({
   password: process.env['DB_PASSWORD'] ?? '',
   entities: [TodoSchema],
   migrations: {
-    path: './migrations',
-    pathTs: './migrations',
+    path: resolve(__dirname, 'migrations'),
   },
 });
