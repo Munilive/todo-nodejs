@@ -43,4 +43,7 @@ async function bootstrap() {
   }
 }
 
-bootstrap();
+bootstrap().catch((err: unknown) => {
+  console.error('서버 시작 중 오류가 발생했습니다.', err);
+  process.exit(1);
+});
