@@ -1,2 +1,2 @@
-// Domain models and business logic will be added in Phase 3/4
+// Shared domain models and business logic (reserved for future extraction from server/api)
 export {};
