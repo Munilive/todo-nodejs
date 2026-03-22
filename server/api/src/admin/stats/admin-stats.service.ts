@@ -1,4 +1,4 @@
-import { EntityManager } from '@mikro-orm/postgresql';
+import { EntityManager } from '@mikro-orm/core';
 import { Injectable } from '@nestjs/common';
 
 interface TodoStatsRow {
@@ -40,9 +40,9 @@ export class AdminStatsService {
       `),
       conn.execute<ReminderStatsRow[]>(`
         SELECT
-          COUNT(*)                                              AS total,
-          SUM(CASE WHEN notified_at IS NULL     THEN 1 ELSE 0 END) AS pending,
-          SUM(CASE WHEN notified_at IS NOT NULL THEN 1 ELSE 0 END) AS sent
+          COUNT(*)                                                        AS total,
+          COALESCE(SUM(CASE WHEN notified_at IS NULL     THEN 1 ELSE 0 END), 0) AS pending,
+          COALESCE(SUM(CASE WHEN notified_at IS NOT NULL THEN 1 ELSE 0 END), 0) AS sent
         FROM todo_reminder
       `),
     ]);
