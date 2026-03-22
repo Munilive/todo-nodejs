@@ -13,7 +13,6 @@ export default defineConfig({
   },
   plugins: [
     swc.vite({
-      module: { type: 'commonjs' },
       jsc: {
         parser: {
           syntax: 'typescript',
