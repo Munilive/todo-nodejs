@@ -3,13 +3,13 @@
   "monorepo": true,
   "root": "api",
   "sourceRoot": "api/src",
-  "entryFile": "main",
+  "entryFile": "src/main",
   "projects": {
     "api": {
       "type": "application",
       "root": "api",
       "sourceRoot": "api/src",
-      "entryFile": "main",
+      "entryFile": "src/main",
       "compilerOptions": {
         "tsConfigPath": "api/tsconfig.build.json"
       }

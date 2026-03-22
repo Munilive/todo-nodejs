@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Todo NestJS 모노레포 서버",
   "scripts": {
-    "start:api": "node dist/api/main.js",
+    "start:api": "node api/dist/src/main.js",
     "dev:api": "nest start api --watch",
     "build:api": "nest build api",
     "typecheck": "tsc -p api/tsconfig.json --noEmit",
