@@ -30,7 +30,7 @@ async function bootstrap() {
       .setVersion('1.0')
       .build();
     const document = SwaggerModule.createDocument(app, swaggerConfig);
-    SwaggerModule.setup('api/docs', app, document);
+    SwaggerModule.setup('swagger', app, document);
   }
 
   const port = process.env['PORT'] ?? '8080';
@@ -39,7 +39,7 @@ async function bootstrap() {
   const baseUrl = `http://localhost:${port}`;
   logger.log(`Server running on ${baseUrl}/api`);
   if (isSwaggerEnabled) {
-    logger.log(`Swagger running on ${baseUrl}/api/docs`);
+    logger.log(`Swagger running on ${baseUrl}/swagger`);
   }
 }
 
