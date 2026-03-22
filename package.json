@@ -4,7 +4,8 @@
   "private": true,
   "packageManager": "pnpm@10.30.1",
   "scripts": {
-    "dev": "pnpm --filter @todo-nodejs/server dev:api",
+    "dev": "pnpm --filter @todo-nodejs/server dev:api & pnpm --filter @todo-nodejs/admin dev",
+    "dev:admin": "pnpm --filter @todo-nodejs/admin dev",
     "start": "pnpm --filter @todo-nodejs/server start:api",
     "test": "pnpm -r test",
     "test:coverage": "pnpm --filter @todo-nodejs/server test:coverage",

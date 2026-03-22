@@ -1,0 +1,11 @@
+---
+export const prerender = false;
+import Layout from '@/layouts/Layout.astro';
+import TodoDetail from '@/components/todo/TodoDetail';
+
+const { id } = Astro.params;
+---
+
+<Layout title="할일 상세">
+  <TodoDetail client:load id={id!} />
+</Layout>

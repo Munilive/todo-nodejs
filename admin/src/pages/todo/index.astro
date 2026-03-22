@@ -1,0 +1,8 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import TodoTable from '@/components/todo/TodoTable';
+---
+
+<Layout title="할일 목록">
+  <TodoTable client:load />
+</Layout>
