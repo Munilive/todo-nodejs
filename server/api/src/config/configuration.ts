@@ -1,6 +1,5 @@
 export const configuration = () => ({
   port: parseInt(process.env['PORT'] ?? '8080', 10),
-  healthCheck: process.env['HEALTH_CHECK_URL'] ?? '/health',
   db: {
     host: process.env['DB_HOST'] ?? 'localhost',
     port: parseInt(process.env['DB_PORT'] ?? '5432', 10),
