@@ -14,6 +14,11 @@ import {
 import { ApiCreatedResponse, ApiNoContentResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { ListTodoQueryDto } from './dto/list-todo.query.dto';
+import {
+  CreateTodoResponseDto,
+  TodoListResponseDto,
+  TodoResponseDto,
+} from './dto/todo-response.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
 import { TodoService } from './todo.service';
 
@@ -23,20 +28,20 @@ export class TodoController {
   constructor(private readonly todoService: TodoService) {}
 
   @Get()
-  @ApiOkResponse({ description: '할일 목록' })
+  @ApiOkResponse({ description: '할일 목록', type: TodoListResponseDto })
   list(@Query() query: ListTodoQueryDto) {
     return this.todoService.list(query);
   }
 
   @Get(':todoId')
-  @ApiOkResponse({ description: '할일 상세' })
+  @ApiOkResponse({ description: '할일 상세', type: TodoResponseDto })
   get(@Param('todoId', ParseUUIDPipe) todoId: string) {
     return this.todoService.get(todoId);
   }
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  @ApiCreatedResponse({ description: '할일 생성' })
+  @ApiCreatedResponse({ description: '할일 생성', type: CreateTodoResponseDto })
   create(@Body() dto: CreateTodoDto) {
     return this.todoService.create(dto);
   }
