@@ -3,13 +3,13 @@
   "monorepo": true,
   "root": "api",
   "sourceRoot": "api/src",
-  "entryFile": "src/main",
+  "entryFile": "main",
   "projects": {
     "api": {
       "type": "application",
       "root": "api",
       "sourceRoot": "api/src",
-      "entryFile": "src/main",
+      "entryFile": "main",
       "compilerOptions": {
         "tsConfigPath": "api/tsconfig.build.json"
       }
@@ -22,11 +22,6 @@
       "compilerOptions": {
         "tsConfigPath": "libs/domain/tsconfig.lib.json"
       }
-    }
-  },
-  "compilerOptions": {
-    "builder": {
-      "type": "swc"
     }
   }
 }

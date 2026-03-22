@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Todo NestJS 모노레포 서버",
   "scripts": {
-    "start:api": "node api/dist/src/main.js",
+    "start:api": "node api/dist/main.js",
     "dev:api": "nest start api --watch",
     "build:api": "nest build api",
     "typecheck": "tsc -p api/tsconfig.json --noEmit",
@@ -41,7 +41,6 @@
     "@munilive/tsconfig": "^1.0.0",
     "@nestjs/cli": "^11.0.0",
     "@nestjs/testing": "^11.1.17",
-    "@swc/cli": "^0.8.0",
     "@swc/core": "^1.15.18",
     "@types/express": "^5.0.6",
     "@types/node": "^25.5.0",
