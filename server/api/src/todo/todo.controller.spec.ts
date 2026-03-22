@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { ListTodoQueryDto } from './dto/list-todo.query.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
-import { Todo, TodoContext, TodoStatus } from '@domain';
+import { Todo, TodoContext, TodoStatus } from '@app/domain';
 import { TodoController } from './todo.controller';
 import { TodoService } from './todo.service';
 

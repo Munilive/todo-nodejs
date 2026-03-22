@@ -41,7 +41,7 @@ jobs:
         run: pnpm lint
 
       - name: Typecheck
-        run: pnpm --filter @todo-nodejs/api typecheck
+        run: pnpm --filter @todo-nodejs/server typecheck
 
       - name: Test
         run: pnpm test
