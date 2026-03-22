@@ -1,0 +1,18 @@
+@baseUrl = http://localhost:8080
+
+### 통계 개요 조회
+# 응답 예시:
+# {
+#   "todo": {
+#     "total": 42,
+#     "byStatus": { "todo": 20, "in_progress": 10, "done": 12 },
+#     "byContext": { "none": 5, "work": 25, "home": 12 },
+#     "overdue": 3
+#   },
+#   "reminder": {
+#     "total": 15,
+#     "pending": 8,
+#     "sent": 7
+#   }
+# }
+GET {{baseUrl}}/admin/v1/stats

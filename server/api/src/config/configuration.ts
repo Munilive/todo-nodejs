@@ -7,6 +7,9 @@ export const configuration = () => ({
     user: process.env['DB_USER'] ?? 'postgres',
     password: process.env['DB_PASSWORD'] ?? '',
   },
+  slack: {
+    webhookUrl: process.env['SLACK_WEBHOOK_URL'] ?? '',
+  },
 });
 
 export type AppConfig = ReturnType<typeof configuration>;

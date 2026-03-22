@@ -1,0 +1,83 @@
+@baseUrl = http://localhost:8080
+@todoId = 00000000-0000-0000-0000-000000000001
+
+### 할일 목록 조회 (미리 알림 건수 포함)
+GET {{baseUrl}}/admin/v1/todo
+
+### 할일 목록 조회 - 페이지네이션
+GET {{baseUrl}}/admin/v1/todo?skip=0&limit=10&sort=-createdAt
+
+### 할일 목록 조회 - 제목 검색
+GET {{baseUrl}}/admin/v1/todo?title=보고서
+
+### 할일 목록 조회 - 상태 필터
+GET {{baseUrl}}/admin/v1/todo?status=todo
+
+### 할일 목록 조회 - 기한 초과 (마감일 범위)
+GET {{baseUrl}}/admin/v1/todo?startDueDate=2024-01-01&endDueDate=2025-12-31
+
+### 할일 목록 조회 - 복합 조건
+GET {{baseUrl}}/admin/v1/todo?status=in_progress&context=work&skip=0&limit=20
+
+###
+
+### 할일 상세 조회 (미리 알림 전체 포함)
+GET {{baseUrl}}/admin/v1/todo/{{todoId}}
+
+###
+
+### 할일 생성 (미리 알림 포함)
+POST {{baseUrl}}/admin/v1/todo
+Content-Type: application/json
+
+{
+  "title": "어드민 생성 할일",
+  "context": "work",
+  "dueDate": "2026-04-01",
+  "reminders": [
+    { "offsetValue": 1, "offsetUnit": "day" },
+    { "offsetValue": 1, "offsetUnit": "hour" }
+  ]
+}
+
+### 할일 생성 (최소)
+POST {{baseUrl}}/admin/v1/todo
+Content-Type: application/json
+
+{
+  "title": "어드민 최소 할일"
+}
+
+###
+
+### 할일 수정
+PUT {{baseUrl}}/admin/v1/todo/{{todoId}}
+Content-Type: application/json
+
+{
+  "title": "수정된 할일",
+  "status": "in_progress"
+}
+
+### 할일 수정 - 미리 알림 교체
+PUT {{baseUrl}}/admin/v1/todo/{{todoId}}
+Content-Type: application/json
+
+{
+  "reminders": [
+    { "offsetValue": 2, "offsetUnit": "hour" }
+  ]
+}
+
+### 할일 수정 - 미리 알림 전체 삭제
+PUT {{baseUrl}}/admin/v1/todo/{{todoId}}
+Content-Type: application/json
+
+{
+  "reminders": []
+}
+
+###
+
+### 할일 삭제 (연관 미리 알림 전체 삭제)
+DELETE {{baseUrl}}/admin/v1/todo/{{todoId}}

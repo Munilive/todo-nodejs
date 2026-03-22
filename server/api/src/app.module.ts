@@ -4,6 +4,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { LoggerModule } from 'nestjs-pino';
 import { configuration } from './config/configuration';
+import { AdminModule } from './admin/admin.module';
 import { HealthModule } from './health/health.module';
 import { TodoModule } from './todo/todo.module';
 
@@ -39,6 +40,7 @@ import { TodoModule } from './todo/todo.module';
     }),
     HealthModule,
     TodoModule,
+    AdminModule,
   ],
 })
 export class AppModule {}
