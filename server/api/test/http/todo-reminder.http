@@ -1,0 +1,124 @@
+@baseUrl = http://localhost:8080
+@todoId = 00000000-0000-0000-0000-000000000001
+
+### 미리 알림 포함 할일 생성 - 1시간 전
+POST {{baseUrl}}/api/todo
+Content-Type: application/json
+
+{
+  "title": "팀 미팅 준비",
+  "context": "work",
+  "dueDate": "2026-04-01",
+  "reminders": [
+    { "offsetValue": 1, "offsetUnit": "hour" }
+  ]
+}
+
+### 미리 알림 포함 할일 생성 - 여러 개 (1일 전 + 1시간 전 + 30분 전)
+POST {{baseUrl}}/api/todo
+Content-Type: application/json
+
+{
+  "title": "프로젝트 발표",
+  "context": "work",
+  "dueDate": "2026-04-15",
+  "reminders": [
+    { "offsetValue": 1,  "offsetUnit": "day"    },
+    { "offsetValue": 1,  "offsetUnit": "hour"   },
+    { "offsetValue": 30, "offsetUnit": "minute" }
+  ]
+}
+
+### 미리 알림 포함 할일 생성 - 분 단위
+POST {{baseUrl}}/api/todo
+Content-Type: application/json
+
+{
+  "title": "약 먹기",
+  "dueDate": "2026-04-01",
+  "reminders": [
+    { "offsetValue": 10, "offsetUnit": "minute" }
+  ]
+}
+
+### 미리 알림 포함 할일 생성 - 일 단위
+POST {{baseUrl}}/api/todo
+Content-Type: application/json
+
+{
+  "title": "여권 갱신 신청",
+  "dueDate": "2026-05-01",
+  "reminders": [
+    { "offsetValue": 7, "offsetUnit": "day" },
+    { "offsetValue": 3, "offsetUnit": "day" }
+  ]
+}
+
+###
+
+### [오류] dueDate 없이 reminders 설정 → 400
+POST {{baseUrl}}/api/todo
+Content-Type: application/json
+
+{
+  "title": "마감일 없는 할일",
+  "reminders": [
+    { "offsetValue": 1, "offsetUnit": "hour" }
+  ]
+}
+
+###
+
+### 미리 알림 교체 (기존 미발송 알림 전체 교체)
+PUT {{baseUrl}}/api/todo/{{todoId}}
+Content-Type: application/json
+
+{
+  "reminders": [
+    { "offsetValue": 2, "offsetUnit": "hour" },
+    { "offsetValue": 1, "offsetUnit": "day"  }
+  ]
+}
+
+### 미리 알림 전체 삭제 (reminders 빈 배열 전달)
+PUT {{baseUrl}}/api/todo/{{todoId}}
+Content-Type: application/json
+
+{
+  "reminders": []
+}
+
+### 미리 알림 유지 + 다른 필드만 수정 (reminders 필드 생략)
+# reminders 필드를 아예 보내지 않으면 기존 알림 변경 없음
+PUT {{baseUrl}}/api/todo/{{todoId}}
+Content-Type: application/json
+
+{
+  "title": "수정된 제목"
+}
+
+### dueDate 변경 + 미리 알림 재설정
+PUT {{baseUrl}}/api/todo/{{todoId}}
+Content-Type: application/json
+
+{
+  "dueDate": "2026-06-01",
+  "reminders": [
+    { "offsetValue": 1, "offsetUnit": "day" }
+  ]
+}
+
+### [오류] dueDate 없는 할일에 reminders 추가 → 400
+PUT {{baseUrl}}/api/todo/{{todoId}}
+Content-Type: application/json
+
+{
+  "reminders": [
+    { "offsetValue": 1, "offsetUnit": "hour" }
+  ]
+}
+
+###
+
+### 할일 삭제 (연관된 미리 알림 전체 함께 삭제)
+DELETE {{baseUrl}}/api/todo/{{todoId}}
