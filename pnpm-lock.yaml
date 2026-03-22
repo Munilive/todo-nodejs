@@ -54,6 +54,9 @@ importers:
         specifier: ^2.3.0
         version: 2.4.7
     devDependencies:
+      '@munilive/prettier-config':
+        specifier: ^1.0.3
+        version: 1.0.3(prettier@3.8.1)
       eslint:
         specifier: ^3.12.2
         version: 3.19.0
@@ -63,6 +66,9 @@ importers:
       eslint-plugin-import:
         specifier: ^2.2.0
         version: 2.32.0(eslint@3.19.0)
+      prettier:
+        specifier: ^3.8.1
+        version: 3.8.1
       should:
         specifier: ^11.1.2
         version: 11.2.1
@@ -71,6 +77,11 @@ importers:
         version: 1.17.7
 
 packages:
+
+  '@munilive/prettier-config@1.0.3':
+    resolution: {integrity: sha512-j5Lg2FsRyYK1QQxLb8uOtLvPd2cKT/oLeelqU/vYKsliRRgAfTbKRu7xb8wkoG3BwnezdmoicGYiVcKn+eZI0w==, tarball: https://npm.pkg.github.com/download/@munilive/prettier-config/1.0.3/a4b12e37571a0f120ba9fadf8b29f14540762025}
+    peerDependencies:
+      prettier: '>=3.0.0'
 
   '@rtsao/scc@1.1.0':
     resolution: {integrity: sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==}
@@ -1092,6 +1103,11 @@ packages:
     resolution: {integrity: sha512-ESF23V4SKG6lVSGZgYNpbsiaAkdab6ZgOxe52p7+Kid3W3u3bxR4Vfd/o21dmN7jSt0IwgZ4v5MUd26FEtXE9w==}
     engines: {node: '>= 0.8.0'}
 
+  prettier@3.8.1:
+    resolution: {integrity: sha512-UOnG6LftzbdaHZcKoPFtOcCKztrQ57WkHDeRD9t/PTQtmT0NHSeWWepj6pS0z/N7+08BHFDQVUrfmfMRcZwbMg==}
+    engines: {node: '>=14'}
+    hasBin: true
+
   process-nextick-args@1.0.7:
     resolution: {integrity: sha512-yN0WQmuCX63LP/TMvAg31nvT6m4vDqJEiiv2CAZqWOGNWutc9DfDk1NPYYmKUFmaVM2UwDowH4u5AHWYP/jxKw==}
 
@@ -1474,6 +1490,10 @@ packages:
     engines: {node: '>=0.4'}
 
 snapshots:
+
+  '@munilive/prettier-config@1.0.3(prettier@3.8.1)':
+    dependencies:
+      prettier: 3.8.1
 
   '@rtsao/scc@1.1.0': {}
 
@@ -2688,6 +2708,8 @@ snapshots:
   possible-typed-array-names@1.1.0: {}
 
   prelude-ls@1.1.2: {}
+
+  prettier@3.8.1: {}
 
   process-nextick-args@1.0.7: {}
 
