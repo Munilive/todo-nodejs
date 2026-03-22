@@ -11,7 +11,8 @@ async function bootstrap() {
 
   const logger = app.get(Logger);
   app.useLogger(logger);
-  app.setGlobalPrefix('api');
+  const healthCheckUrl = process.env['HEALTH_CHECK_URL'] ?? '/health';
+  app.setGlobalPrefix('api', { exclude: [healthCheckUrl] });
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
