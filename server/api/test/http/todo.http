@@ -56,6 +56,20 @@ Content-Type: application/json
   "dueDate": "2025-12-31"
 }
 
+### 할일 생성 (미리 알림 포함)
+POST {{baseUrl}}/api/todo
+Content-Type: application/json
+
+{
+  "title": "팀 미팅 준비",
+  "context": "work",
+  "dueDate": "2026-04-01",
+  "reminders": [
+    { "offsetValue": 1, "offsetUnit": "day" },
+    { "offsetValue": 1, "offsetUnit": "hour" }
+  ]
+}
+
 ###
 
 ### 할일 수정 - 제목
@@ -91,6 +105,24 @@ Content-Type: application/json
   "status": "in_progress",
   "context": "home",
   "dueDate": "2025-06-30"
+}
+
+### 할일 수정 - 미리 알림 교체 (기존 미발송 알림 전체 교체)
+PUT {{baseUrl}}/api/todo/{{todoId}}
+Content-Type: application/json
+
+{
+  "reminders": [
+    { "offsetValue": 30, "offsetUnit": "minute" }
+  ]
+}
+
+### 할일 수정 - 미리 알림 전체 삭제 (빈 배열)
+PUT {{baseUrl}}/api/todo/{{todoId}}
+Content-Type: application/json
+
+{
+  "reminders": []
 }
 
 ###
