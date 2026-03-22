@@ -14,9 +14,13 @@
   },
   "prettier": "@munilive/prettier-config",
   "lint-staged": {
-    "*.{js,mjs,ts}": ["eslint --fix", "prettier --write"]
+    "*.{js,mjs,ts}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   },
   "devDependencies": {
+    "@mikro-orm/core": "^6.6.9",
     "@munilive/eslint-config": "^1.0.3",
     "@munilive/prettier-config": "^1.0.3",
     "eslint": "^10.1.0",

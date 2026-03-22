@@ -1,6 +1,6 @@
 import { PostgreSqlDriver } from '@mikro-orm/postgresql';
 import { defineConfig } from '@mikro-orm/core';
-import { Todo } from '@todo-nodejs/domain';
+import { Todo } from '@domain';
 
 export default defineConfig({
   driver: PostgreSqlDriver,

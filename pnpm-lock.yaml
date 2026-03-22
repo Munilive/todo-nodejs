@@ -8,6 +8,9 @@ importers:
 
   .:
     devDependencies:
+      '@mikro-orm/core':
+        specifier: ^6.6.9
+        version: 6.6.9
       '@munilive/eslint-config':
         specifier: ^1.0.3
         version: 1.0.3(eslint-plugin-astro@1.6.0(eslint@10.1.0))(eslint@10.1.0)(typescript@5.9.3)
@@ -26,18 +29,6 @@ importers:
       prettier:
         specifier: ^3.8.1
         version: 3.8.1
-
-  packages/domain:
-    devDependencies:
-      '@mikro-orm/core':
-        specifier: ^6.6.9
-        version: 6.6.9
-      '@munilive/tsconfig':
-        specifier: ^1.0.0
-        version: 1.0.0
-      typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
 
   server/api:
     dependencies:
@@ -68,9 +59,6 @@ importers:
       '@nestjs/swagger':
         specifier: ^11.2.6
         version: 11.2.6(@nestjs/common@11.1.17(class-transformer@0.5.1)(class-validator@0.15.1)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.17)(class-transformer@0.5.1)(class-validator@0.15.1)(reflect-metadata@0.2.2)
-      '@todo-nodejs/domain':
-        specifier: workspace:*
-        version: link:../../packages/domain
       class-transformer:
         specifier: ^0.5.1
         version: 0.5.1

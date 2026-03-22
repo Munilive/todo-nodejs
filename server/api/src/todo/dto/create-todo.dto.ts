@@ -1,6 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsDateString, IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
-import { TodoContext, TodoStatus } from '@todo-nodejs/domain';
+import { TodoContext, TodoStatus } from '@domain';
 
 export class CreateTodoDto {
   @ApiProperty({ description: '할일 제목' })

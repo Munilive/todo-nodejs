@@ -1,7 +1,7 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsDateString, IsEnum, IsInt, IsOptional, IsString, Min } from 'class-validator';
-import { TodoContext, TodoStatus } from '@todo-nodejs/domain';
+import { TodoContext, TodoStatus } from '@domain';
 
 export class ListTodoQueryDto {
   @ApiPropertyOptional({ description: '건너뛸 수', default: 0 })
