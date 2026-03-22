@@ -1,0 +1,99 @@
+@baseUrl = http://localhost:8080
+@todoId = 00000000-0000-0000-0000-000000000001
+
+### 할일 목록 조회 (기본)
+GET {{baseUrl}}/api/todo
+
+### 할일 목록 조회 - 페이지네이션
+GET {{baseUrl}}/api/todo?skip=0&limit=10&sort=-createdAt
+
+### 할일 목록 조회 - 제목 검색
+GET {{baseUrl}}/api/todo?title=청소
+
+### 할일 목록 조회 - 상태 필터
+# status: todo | in_progress | done
+GET {{baseUrl}}/api/todo?status=todo
+
+### 할일 목록 조회 - 컨텍스트 필터
+# context: none | work | home
+GET {{baseUrl}}/api/todo?context=work
+
+### 할일 목록 조회 - 생성일 범위
+GET {{baseUrl}}/api/todo?startCreatedAt=2025-01-01&endCreatedAt=2025-12-31
+
+### 할일 목록 조회 - 마감일 범위
+GET {{baseUrl}}/api/todo?startDueDate=2025-01-01&endDueDate=2025-12-31
+
+### 할일 목록 조회 - 완료일 범위
+GET {{baseUrl}}/api/todo?startDoneAt=2025-01-01&endDoneAt=2025-12-31
+
+### 할일 목록 조회 - 복합 조건
+GET {{baseUrl}}/api/todo?status=todo&context=work&title=보고서&skip=0&limit=5
+
+###
+
+### 할일 단건 조회
+GET {{baseUrl}}/api/todo/{{todoId}}
+
+###
+
+### 할일 생성 (최소)
+POST {{baseUrl}}/api/todo
+Content-Type: application/json
+
+{
+  "title": "새 할일"
+}
+
+### 할일 생성 (전체 필드)
+POST {{baseUrl}}/api/todo
+Content-Type: application/json
+
+{
+  "title": "주간 보고서 작성",
+  "status": "todo",
+  "context": "work",
+  "dueDate": "2025-12-31"
+}
+
+###
+
+### 할일 수정 - 제목
+PUT {{baseUrl}}/api/todo/{{todoId}}
+Content-Type: application/json
+
+{
+  "title": "수정된 제목"
+}
+
+### 할일 수정 - 상태 변경 (진행중)
+PUT {{baseUrl}}/api/todo/{{todoId}}
+Content-Type: application/json
+
+{
+  "status": "in_progress"
+}
+
+### 할일 수정 - 상태 변경 (완료)
+PUT {{baseUrl}}/api/todo/{{todoId}}
+Content-Type: application/json
+
+{
+  "status": "done"
+}
+
+### 할일 수정 - 전체 필드
+PUT {{baseUrl}}/api/todo/{{todoId}}
+Content-Type: application/json
+
+{
+  "title": "수정된 할일",
+  "status": "in_progress",
+  "context": "home",
+  "dueDate": "2025-06-30"
+}
+
+###
+
+### 할일 삭제
+DELETE {{baseUrl}}/api/todo/{{todoId}}

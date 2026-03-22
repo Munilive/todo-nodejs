@@ -1,0 +1,4 @@
+@baseUrl = http://localhost:8080
+
+### 헬스체크
+GET {{baseUrl}}/health
