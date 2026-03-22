@@ -1,6 +1,7 @@
+import { MikroOrmModule } from '@mikro-orm/nestjs';
+import { PostgreSqlDriver } from '@mikro-orm/postgresql';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { MongooseModule } from '@nestjs/mongoose';
 import { LoggerModule } from 'nestjs-pino';
 import { configuration } from './config/configuration';
 import { TodoModule } from './todo/todo.module';
@@ -11,11 +12,16 @@ import { TodoModule } from './todo/todo.module';
       isGlobal: true,
       load: [configuration],
     }),
-    MongooseModule.forRootAsync({
+    MikroOrmModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
-        uri: config.get<string>('db.uri'),
-        maxPoolSize: config.get<number>('db.poolSize'),
+        driver: PostgreSqlDriver,
+        host: config.get<string>('db.host'),
+        port: config.get<number>('db.port'),
+        dbName: config.get<string>('db.name'),
+        user: config.get<string>('db.user'),
+        password: config.get<string>('db.password'),
+        autoLoadEntities: true,
       }),
     }),
     LoggerModule.forRoot({

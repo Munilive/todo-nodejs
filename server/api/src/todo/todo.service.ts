@@ -1,10 +1,10 @@
+import { EntityRepository, FilterQuery } from '@mikro-orm/core';
+import { InjectRepository } from '@mikro-orm/nestjs';
 import { Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { FilterQuery, Model, Types } from 'mongoose';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { ListTodoQueryDto } from './dto/list-todo.query.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
-import { Todo, TodoDocument, TodoStatus } from './schemas/todo.schema';
+import { Todo, TodoStatus } from './entities/todo.entity';
 
 function toStartOfDay(dateStr: string): Date {
   return new Date(`${dateStr}T00:00:00`);
@@ -14,88 +14,82 @@ function toEndOfDay(dateStr: string): Date {
   return new Date(`${dateStr}T23:59:59`);
 }
 
+function parseSort(sort: string): Record<string, 'ASC' | 'DESC'> {
+  if (sort.startsWith('-')) {
+    return { [sort.slice(1)]: 'DESC' };
+  }
+  return { [sort]: 'ASC' };
+}
+
 @Injectable()
 export class TodoService {
-  constructor(@InjectModel(Todo.name) private readonly todoModel: Model<TodoDocument>) {}
+  constructor(
+    @InjectRepository(Todo)
+    private readonly todoRepo: EntityRepository<Todo>,
+  ) {}
 
   async list(query: ListTodoQueryDto) {
     const { skip = 0, limit = 10, sort = '-createdAt', ...search } = query;
-    const filter = this.buildFilter(search);
+    const where = this.buildWhere(search);
 
-    const [items, totalCount] = await Promise.all([
-      this.todoModel.find(filter).sort(sort).skip(skip).limit(limit).lean().exec(),
-      this.todoModel.countDocuments(filter).exec(),
-    ]);
+    const [items, totalCount] = await this.todoRepo.findAndCount(where, {
+      offset: skip,
+      limit,
+      orderBy: parseSort(sort),
+    });
 
     return { items, totalCount, skip, limit, sort };
   }
 
-  async get(todoId: string): Promise<TodoDocument> {
-    this.validateObjectId(todoId);
-    const todo = await this.todoModel
-      .findById(todoId)
-      .select('title status context dueDate createdAt doneAt')
-      .lean()
-      .exec();
+  async get(todoId: string): Promise<Todo> {
+    const todo = await this.todoRepo.findOne({ id: todoId });
 
     if (!todo) {
       throw new NotFoundException('할일(`Todo`)이 존재하지 않습니다.');
     }
 
-    return todo as unknown as TodoDocument;
+    return todo;
   }
 
-  async create(dto: CreateTodoDto): Promise<{ _id: Types.ObjectId }> {
-    const todo = await this.todoModel.create(dto);
-    return { _id: todo._id };
+  async create(dto: CreateTodoDto): Promise<{ id: string }> {
+    const todo = this.todoRepo.create(dto);
+    await this.todoRepo.getEntityManager().flush();
+    return { id: todo.id };
   }
 
   async update(todoId: string, dto: UpdateTodoDto): Promise<void> {
-    this.validateObjectId(todoId);
-
     if (Object.keys(dto).length === 0) {
       throw new UnprocessableEntityException('전달된 파라메터가 없습니다.');
     }
 
-    const exists = await this.todoModel.exists({ _id: todoId });
-    if (!exists) {
+    const todo = await this.todoRepo.findOne({ id: todoId });
+    if (!todo) {
       throw new NotFoundException('할일(`Todo`)이 존재하지 않습니다.');
     }
 
-    const updateSet: Record<string, unknown> = { ...dto };
-    if (dto.status === TodoStatus.DONE && !updateSet['doneAt']) {
-      updateSet['doneAt'] = new Date();
+    this.todoRepo.assign(todo, dto);
+
+    if (dto.status === TodoStatus.DONE && !todo.doneAt) {
+      todo.doneAt = new Date();
     }
 
-    await this.todoModel.findByIdAndUpdate(todoId, { $set: updateSet });
+    await this.todoRepo.getEntityManager().flush();
   }
 
   async remove(todoId: string): Promise<void> {
-    this.validateObjectId(todoId);
-
-    const exists = await this.todoModel.exists({ _id: todoId });
-    if (!exists) {
+    const todo = await this.todoRepo.findOne({ id: todoId });
+    if (!todo) {
       throw new NotFoundException('할일(`Todo`)이 존재하지 않습니다.');
     }
 
-    await this.todoModel.deleteOne({ _id: todoId });
+    await this.todoRepo.getEntityManager().removeAndFlush(todo);
   }
 
-  private validateObjectId(id: string): void {
-    if (!id || !Types.ObjectId.isValid(id)) {
-      throw new UnprocessableEntityException(
-        `할일 ID(\`todoId\`)의 데이터 타입은 몽고 DB의 \`ObjectId\`입니다.`,
-      );
-    }
-  }
-
-  private buildFilter(
-    search: Omit<ListTodoQueryDto, 'skip' | 'limit' | 'sort'>,
-  ): FilterQuery<Todo> {
+  private buildWhere(search: Omit<ListTodoQueryDto, 'skip' | 'limit' | 'sort'>): FilterQuery<Todo> {
     const and: FilterQuery<Todo>[] = [];
 
     if (search.title) {
-      and.push({ title: new RegExp(search.title, 'i') });
+      and.push({ title: { $ilike: `%${search.title}%` } });
     }
     if (search.status) {
       and.push({ status: search.status });

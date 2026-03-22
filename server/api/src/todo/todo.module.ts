@@ -1,11 +1,11 @@
+import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
-import { Todo, TodoSchema } from './schemas/todo.schema';
+import { Todo } from './entities/todo.entity';
 import { TodoController } from './todo.controller';
 import { TodoService } from './todo.service';
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: Todo.name, schema: TodoSchema }])],
+  imports: [MikroOrmModule.forFeature([Todo])],
   controllers: [TodoController],
   providers: [TodoService],
 })

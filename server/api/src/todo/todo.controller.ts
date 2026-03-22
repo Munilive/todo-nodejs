@@ -6,6 +6,7 @@ import {
   HttpCode,
   HttpStatus,
   Param,
+  ParseUUIDPipe,
   Post,
   Put,
   Query,
@@ -29,7 +30,7 @@ export class TodoController {
 
   @Get(':todoId')
   @ApiOkResponse({ description: '할일 상세' })
-  get(@Param('todoId') todoId: string) {
+  get(@Param('todoId', ParseUUIDPipe) todoId: string) {
     return this.todoService.get(todoId);
   }
 
@@ -43,14 +44,14 @@ export class TodoController {
   @Put(':todoId')
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiNoContentResponse({ description: '할일 수정' })
-  async update(@Param('todoId') todoId: string, @Body() dto: UpdateTodoDto) {
+  async update(@Param('todoId', ParseUUIDPipe) todoId: string, @Body() dto: UpdateTodoDto) {
     await this.todoService.update(todoId, dto);
   }
 
   @Delete(':todoId')
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiNoContentResponse({ description: '할일 삭제' })
-  async remove(@Param('todoId') todoId: string) {
+  async remove(@Param('todoId', ParseUUIDPipe) todoId: string) {
     await this.todoService.remove(todoId);
   }
 }

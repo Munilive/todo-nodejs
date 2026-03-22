@@ -2,8 +2,11 @@ export const configuration = () => ({
   port: parseInt(process.env['PORT'] ?? '8080', 10),
   healthCheck: process.env['HEALTH_CHECK_URL'] ?? '/health',
   db: {
-    uri: process.env['DB_URI'] ?? '',
-    poolSize: parseInt(process.env['DB_POOL_SIZE'] ?? '5', 10),
+    host: process.env['DB_HOST'] ?? 'localhost',
+    port: parseInt(process.env['DB_PORT'] ?? '5432', 10),
+    name: process.env['DB_NAME'] ?? 'todo',
+    user: process.env['DB_USER'] ?? 'postgres',
+    password: process.env['DB_PASSWORD'] ?? '',
   },
 });
 
