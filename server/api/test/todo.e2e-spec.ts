@@ -6,7 +6,7 @@ import request from 'supertest';
 import { TodoController } from '../src/todo/todo.controller';
 import { TodoService } from '../src/todo/todo.service';
 import { AllExceptionsFilter } from '../src/common/filters/http-exception.filter';
-import { TodoStatus, TodoContext } from '../src/todo/entities/todo.entity';
+import { TodoStatus, TodoContext } from '@app/domain';
 
 describe('Todo E2E', () => {
   let app: INestApplication;

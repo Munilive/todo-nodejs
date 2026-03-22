@@ -3,7 +3,12 @@
   "extends": "@munilive/tsconfig/node.json",
   "compilerOptions": {
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "baseUrl": "./",
+    "paths": {
+      "@app/domain": ["libs/domain/src"],
+      "@app/domain/*": ["libs/domain/src/*"]
+    }
   },
   "ts-node": {
     "require": ["tsconfig-paths/register"]
