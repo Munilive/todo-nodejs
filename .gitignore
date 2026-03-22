@@ -12,6 +12,7 @@ dist/
 build/
 out/
 .output/
+admin/.astro/
 
 # ==================
 # TypeScript
