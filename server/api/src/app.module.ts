@@ -11,6 +11,7 @@ import { TodoModule } from './todo/todo.module';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+      envFilePath: 'api/.env',
       load: [configuration],
     }),
     MikroOrmModule.forRootAsync({
