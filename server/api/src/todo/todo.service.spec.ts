@@ -4,7 +4,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { ListTodoQueryDto } from './dto/list-todo.query.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
-import { Todo, TodoContext, TodoStatus } from './entities/todo.entity';
+import { Todo, TodoContext, TodoStatus } from '@todo-nodejs/domain';
 import { TodoService } from './todo.service';
 
 const TODO_REPO_TOKEN = Symbol('TodoRepository');

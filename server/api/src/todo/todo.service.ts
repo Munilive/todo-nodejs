@@ -4,7 +4,7 @@ import { Injectable, NotFoundException, UnprocessableEntityException } from '@ne
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { ListTodoQueryDto } from './dto/list-todo.query.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
-import { Todo, TodoStatus } from './entities/todo.entity';
+import { Todo, TodoStatus } from '@todo-nodejs/domain';
 
 function toStartOfDay(dateStr: string): Date {
   return new Date(`${dateStr}T00:00:00`);
