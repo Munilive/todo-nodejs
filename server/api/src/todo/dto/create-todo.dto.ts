@@ -1,6 +1,16 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsDateString, IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { Type } from 'class-transformer';
+import {
+  IsArray,
+  IsDateString,
+  IsEnum,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
 import { TodoContext, TodoStatus } from '@app/domain';
+import { ReminderDto } from './reminder.dto';
 
 export class CreateTodoDto {
   @ApiProperty({ description: '할일 제목' })
@@ -22,4 +32,11 @@ export class CreateTodoDto {
   @IsOptional()
   @IsDateString({}, { message: '입력 하신 (`dueDate`) 데이터 타입이 잘못 되었습니다.' })
   dueDate?: string;
+
+  @ApiPropertyOptional({ type: [ReminderDto], description: '미리 알림 목록 (dueDate 필수)' })
+  @IsOptional()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => ReminderDto)
+  reminders?: ReminderDto[];
 }

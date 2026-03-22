@@ -2,7 +2,7 @@ import { config } from 'dotenv';
 import { resolve } from 'path';
 import { PostgreSqlDriver } from '@mikro-orm/postgresql';
 import { defineConfig } from '@mikro-orm/core';
-import { TodoSchema } from '@app/domain';
+import { TodoReminderSchema, TodoSchema } from '@app/domain';
 
 config({ path: resolve(process.cwd(), 'api/.env') });
 
@@ -13,8 +13,8 @@ export default defineConfig({
   dbName: process.env['DB_NAME'] ?? 'todo',
   user: process.env['DB_USER'] ?? 'postgres',
   password: process.env['DB_PASSWORD'] ?? '',
-  entities: [TodoSchema],
+  entities: [TodoSchema, TodoReminderSchema],
   migrations: {
-    path: resolve(__dirname, 'migrations'),
+    path: resolve(process.cwd(), 'api/migrations'),
   },
 });

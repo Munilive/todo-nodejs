@@ -1,10 +1,33 @@
 import { EntityRepository, FilterQuery } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
-import { Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+  UnprocessableEntityException,
+} from '@nestjs/common';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { ListTodoQueryDto } from './dto/list-todo.query.dto';
+import { ReminderDto } from './dto/reminder.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
-import { TodoSchema, type Todo, TodoStatus } from '@app/domain';
+import {
+  TodoSchema,
+  type Todo,
+  TodoStatus,
+  TodoReminderSchema,
+  type TodoReminder,
+  ReminderOffsetUnit,
+} from '@app/domain';
+
+const OFFSET_MS: Record<ReminderOffsetUnit, number> = {
+  [ReminderOffsetUnit.MINUTE]: 60 * 1000,
+  [ReminderOffsetUnit.HOUR]: 60 * 60 * 1000,
+  [ReminderOffsetUnit.DAY]: 24 * 60 * 60 * 1000,
+};
+
+function calcRemindAt(dueDate: Date, offsetValue: number, offsetUnit: ReminderOffsetUnit): Date {
+  return new Date(dueDate.getTime() - offsetValue * OFFSET_MS[offsetUnit]);
+}
 
 function toStartOfDay(dateStr: string): Date {
   return new Date(`${dateStr}T00:00:00`);
@@ -26,6 +49,8 @@ export class TodoService {
   constructor(
     @InjectRepository(TodoSchema)
     private readonly todoRepo: EntityRepository<Todo>,
+    @InjectRepository(TodoReminderSchema)
+    private readonly reminderRepo: EntityRepository<TodoReminder>,
   ) {}
 
   async list(query: ListTodoQueryDto) {
@@ -52,12 +77,27 @@ export class TodoService {
   }
 
   async create(dto: CreateTodoDto): Promise<{ id: string }> {
-    const todo = this.todoRepo.create(dto);
-    await this.todoRepo.getEntityManager().flush();
+    const { reminders, ...todoData } = dto;
+
+    if (reminders?.length && !todoData.dueDate) {
+      throw new BadRequestException('미리 알림을 설정하려면 마감일(`dueDate`)이 필요합니다.');
+    }
+
+    const em = this.todoRepo.getEntityManager();
+    const todo = this.todoRepo.create(todoData);
+
+    if (reminders?.length && todoData.dueDate) {
+      const dueDate = new Date(todoData.dueDate);
+      this.createReminders(todo, dueDate, reminders);
+    }
+
+    await em.flush();
     return { id: todo.id };
   }
 
   async update(todoId: string, dto: UpdateTodoDto): Promise<void> {
+    const { reminders, ...todoData } = dto;
+
     if (Object.keys(dto).length === 0) {
       throw new UnprocessableEntityException('전달된 파라메터가 없습니다.');
     }
@@ -67,13 +107,33 @@ export class TodoService {
       throw new NotFoundException('할일(`Todo`)이 존재하지 않습니다.');
     }
 
-    this.todoRepo.assign(todo, dto);
+    this.todoRepo.assign(todo, todoData);
 
     if (dto.status === TodoStatus.DONE && !todo.doneAt) {
       todo.doneAt = new Date();
     }
 
-    await this.todoRepo.getEntityManager().flush();
+    const em = this.todoRepo.getEntityManager();
+
+    if (reminders !== undefined) {
+      const dueDate = todoData.dueDate ? new Date(todoData.dueDate) : todo.dueDate;
+
+      if (reminders.length > 0 && !dueDate) {
+        throw new BadRequestException('미리 알림을 설정하려면 마감일(`dueDate`)이 필요합니다.');
+      }
+
+      // 미발송 알림 삭제 후 재생성
+      const unnotified = await this.reminderRepo.find({ todo: { id: todoId }, notifiedAt: null });
+      for (const r of unnotified) {
+        em.remove(r);
+      }
+
+      if (reminders.length > 0 && dueDate) {
+        this.createReminders(todo, dueDate, reminders);
+      }
+    }
+
+    await em.flush();
   }
 
   async remove(todoId: string): Promise<void> {
@@ -83,8 +143,23 @@ export class TodoService {
     }
 
     const em = this.todoRepo.getEntityManager();
+    const reminders = await this.reminderRepo.find({ todo: { id: todoId } });
+    for (const r of reminders) {
+      em.remove(r);
+    }
     em.remove(todo);
     await em.flush();
+  }
+
+  private createReminders(todo: Todo, dueDate: Date, reminders: ReminderDto[]): void {
+    for (const r of reminders) {
+      this.reminderRepo.create({
+        todo,
+        offsetValue: r.offsetValue,
+        offsetUnit: r.offsetUnit,
+        remindAt: calcRemindAt(dueDate, r.offsetValue, r.offsetUnit),
+      });
+    }
   }
 
   private buildWhere(search: Omit<ListTodoQueryDto, 'skip' | 'limit' | 'sort'>): FilterQuery<Todo> {
