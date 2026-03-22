@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Todo NestJS 모노레포 서버",
   "scripts": {
-    "start:api": "node api/dist/main.js",
+    "start:api": "node api/dist/api/src/main.js",
     "dev:api": "nest start api --watch",
     "build:api": "nest build api",
     "typecheck": "tsc -p api/tsconfig.json --noEmit",
@@ -15,14 +15,15 @@
     "migration:down": "mikro-orm migration:down"
   },
   "mikro-orm": {
-    "configPaths": ["api/mikro-orm.config.ts"]
+    "configPaths": [
+      "api/mikro-orm.config.ts"
+    ]
   },
   "dependencies": {
     "@mikro-orm/core": "^7.0.4",
     "@mikro-orm/migrations": "^7.0.4",
     "@mikro-orm/nestjs": "^7.0.1",
     "@mikro-orm/postgresql": "^7.0.4",
-    "dataloader": "^2.2.3",
     "@nestjs/common": "^11.1.17",
     "@nestjs/config": "^4.0.3",
     "@nestjs/core": "^11.1.17",
@@ -30,6 +31,8 @@
     "@nestjs/swagger": "^11.2.6",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.15.1",
+    "dataloader": "^2.2.3",
+    "dotenv": "^17.3.1",
     "nestjs-pino": "^4.6.1",
     "pg": "^8.20.0",
     "pino": "^10.3.1",
@@ -39,10 +42,10 @@
   },
   "devDependencies": {
     "@mikro-orm/cli": "^7.0.4",
-    "@swc-node/register": "^1.10.9",
     "@munilive/tsconfig": "^1.0.0",
     "@nestjs/cli": "^11.0.0",
     "@nestjs/testing": "^11.1.17",
+    "@swc-node/register": "^1.10.9",
     "@swc/core": "^1.15.18",
     "@types/express": "^5.0.6",
     "@types/node": "^25.5.0",
