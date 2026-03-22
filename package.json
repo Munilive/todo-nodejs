@@ -29,10 +29,9 @@
     "winston": "^2.3.0"
   },
   "devDependencies": {
+    "@munilive/eslint-config": "^1.0.3",
     "@munilive/prettier-config": "^1.0.3",
-    "eslint": "^3.12.2",
-    "eslint-config-airbnb-base": "^11.0.0",
-    "eslint-plugin-import": "^2.2.0",
+    "eslint": "^10.1.0",
     "prettier": "^3.8.1",
     "should": "^11.1.2",
     "sinon": "^1.17.6"
