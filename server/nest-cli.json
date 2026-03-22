@@ -11,7 +11,7 @@
       "sourceRoot": "api/src",
       "entryFile": "main",
       "compilerOptions": {
-        "tsConfigPath": "api/tsconfig.json"
+        "tsConfigPath": "api/tsconfig.build.json"
       }
     },
     "domain": {
