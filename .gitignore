@@ -19,6 +19,14 @@ out/
 *.tsbuildinfo
 
 # ==================
+# NestJS library build artifacts (tsc output in src/)
+# ==================
+server/libs/**/src/**/*.js
+server/libs/**/src/**/*.js.map
+server/libs/**/src/**/*.d.ts
+server/libs/**/src/**/*.d.ts.map
+
+# ==================
 # Testing
 # ==================
 coverage/
