@@ -4,7 +4,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { ListTodoQueryDto } from './dto/list-todo.query.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
-import { Todo, TodoContext, TodoStatus } from '@app/domain';
+import { type Todo, TodoContext, TodoStatus } from '@app/domain';
 import { TodoService } from './todo.service';
 
 const TODO_REPO_TOKEN = Symbol('TodoRepository');
@@ -25,7 +25,7 @@ describe('TodoService', () => {
 
   const mockEm = {
     flush: vi.fn().mockResolvedValue(undefined),
-    removeAndFlush: vi.fn().mockResolvedValue(undefined),
+    remove: vi.fn().mockReturnThis(),
   };
 
   const mockRepo = {
@@ -226,7 +226,8 @@ describe('TodoService', () => {
 
       await service.remove('test-uuid-1234');
 
-      expect(mockEm.removeAndFlush).toHaveBeenCalledWith(todo);
+      expect(mockEm.remove).toHaveBeenCalledWith(todo);
+      expect(mockEm.flush).toHaveBeenCalled();
     });
 
     it('할일이 없으면 NotFoundException을 던진다', async () => {

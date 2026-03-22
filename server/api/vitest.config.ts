@@ -5,12 +5,11 @@ import { defineConfig } from 'vitest/config';
 export default defineConfig({
   test: {
     globals: true,
-    root: './',
-    include: ['src/**/*.spec.ts', 'test/**/*.e2e-spec.ts'],
+    include: ['api/src/**/*.spec.ts', 'api/test/**/*.e2e-spec.ts'],
     coverage: {
       provider: 'v8',
-      include: ['src/**'],
-      exclude: ['src/main.ts', 'src/**/*.spec.ts'],
+      include: ['api/src/**'],
+      exclude: ['api/src/main.ts', 'api/src/**/*.spec.ts'],
     },
   },
   plugins: [

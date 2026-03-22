@@ -4,7 +4,7 @@ import { Injectable, NotFoundException, UnprocessableEntityException } from '@ne
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { ListTodoQueryDto } from './dto/list-todo.query.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
-import { Todo, TodoStatus } from '@app/domain';
+import { TodoSchema, type Todo, TodoStatus } from '@app/domain';
 
 function toStartOfDay(dateStr: string): Date {
   return new Date(`${dateStr}T00:00:00`);
@@ -24,7 +24,7 @@ function parseSort(sort: string): Record<string, 'ASC' | 'DESC'> {
 @Injectable()
 export class TodoService {
   constructor(
-    @InjectRepository(Todo)
+    @InjectRepository(TodoSchema)
     private readonly todoRepo: EntityRepository<Todo>,
   ) {}
 
@@ -82,7 +82,9 @@ export class TodoService {
       throw new NotFoundException('할일(`Todo`)이 존재하지 않습니다.');
     }
 
-    await this.todoRepo.getEntityManager().removeAndFlush(todo);
+    const em = this.todoRepo.getEntityManager();
+    em.remove(todo);
+    await em.flush();
   }
 
   private buildWhere(search: Omit<ListTodoQueryDto, 'skip' | 'limit' | 'sort'>): FilterQuery<Todo> {

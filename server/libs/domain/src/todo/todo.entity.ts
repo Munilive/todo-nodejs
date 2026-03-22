@@ -1,4 +1,4 @@
-import { Entity, Enum, Opt, PrimaryKey, Property } from '@mikro-orm/core';
+import { defineEntity, p, type InferEntity } from '@mikro-orm/core';
 
 export enum TodoStatus {
   TODO = 'todo',
@@ -12,26 +12,17 @@ export enum TodoContext {
   HOME = 'home',
 }
 
-@Entity()
-export class Todo {
-  @PrimaryKey({ type: 'uuid', defaultRaw: 'gen_random_uuid()' })
-  id!: string;
+export const TodoSchema = defineEntity({
+  name: 'Todo',
+  properties: {
+    id: p.uuid().primary().defaultRaw('gen_random_uuid()'),
+    title: p.string(),
+    status: p.enum(() => TodoStatus).default(TodoStatus.TODO),
+    context: p.enum(() => TodoContext).default(TodoContext.NONE),
+    dueDate: p.datetime().nullable(),
+    createdAt: p.datetime().defaultRaw('now()'),
+    doneAt: p.datetime().nullable(),
+  },
+});
 
-  @Property()
-  title!: string;
-
-  @Enum(() => TodoStatus)
-  status: TodoStatus & Opt = TodoStatus.TODO;
-
-  @Enum(() => TodoContext)
-  context: TodoContext & Opt = TodoContext.NONE;
-
-  @Property({ nullable: true })
-  dueDate?: Date;
-
-  @Property()
-  createdAt: Date & Opt = new Date();
-
-  @Property({ nullable: true })
-  doneAt?: Date;
-}
+export type Todo = InferEntity<typeof TodoSchema>;
