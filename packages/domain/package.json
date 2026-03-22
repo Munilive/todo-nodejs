@@ -1,0 +1,14 @@
+{
+  "name": "@todo-nodejs/domain",
+  "version": "0.0.1",
+  "description": "Shared domain models and business logic",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {}
+}
