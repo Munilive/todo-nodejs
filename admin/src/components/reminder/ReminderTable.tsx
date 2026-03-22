@@ -39,7 +39,7 @@ function ReminderTableContent() {
   const qc = useQueryClient();
   const [skip, setSkip] = useState(0);
   const [limit] = useState(10);
-  const [statusFilter, setStatusFilter] = useState<ReminderStatus | ''>('');
+  const [statusFilter, setStatusFilter] = useState<ReminderStatus | 'all'>('all');
   const [startRemindAt, setStartRemindAt] = useState('');
   const [endRemindAt, setEndRemindAt] = useState('');
 
@@ -52,7 +52,7 @@ function ReminderTableContent() {
       getReminders({
         skip,
         limit,
-        status: statusFilter || undefined,
+        status: statusFilter === 'all' ? undefined : statusFilter,
         startRemindAt: startRemindAt ? new Date(startRemindAt).toISOString() : undefined,
         endRemindAt: endRemindAt ? new Date(endRemindAt).toISOString() : undefined,
       }),
@@ -187,7 +187,7 @@ function ReminderTableContent() {
               <Select
                 value={statusFilter}
                 onValueChange={(v) => {
-                  setStatusFilter(v as ReminderStatus | '');
+                  setStatusFilter(v as ReminderStatus | 'all');
                   setSkip(0);
                 }}
               >
@@ -195,7 +195,7 @@ function ReminderTableContent() {
                   <SelectValue placeholder="전체" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">전체</SelectItem>
+                  <SelectItem value="all">전체</SelectItem>
                   <SelectItem value="pending">대기</SelectItem>
                   <SelectItem value="sent">발송완료</SelectItem>
                 </SelectContent>
@@ -232,7 +232,7 @@ function ReminderTableContent() {
               <Button
                 variant="ghost"
                 onClick={() => {
-                  setStatusFilter('');
+                  setStatusFilter('all');
                   setStartRemindAt('');
                   setEndRemindAt('');
                   setSkip(0);

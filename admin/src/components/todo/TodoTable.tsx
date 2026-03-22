@@ -35,8 +35,8 @@ function TodoTableContent() {
   const [skip, setSkip] = useState(0);
   const [limit] = useState(10);
   const [titleFilter, setTitleFilter] = useState('');
-  const [statusFilter, setStatusFilter] = useState<TodoStatus | ''>('');
-  const [contextFilter, setContextFilter] = useState<TodoContext | ''>('');
+  const [statusFilter, setStatusFilter] = useState<TodoStatus | 'all'>('all');
+  const [contextFilter, setContextFilter] = useState<TodoContext | 'all'>('all');
   const [titleInput, setTitleInput] = useState('');
 
   const { data, isLoading } = useQuery({
@@ -46,8 +46,8 @@ function TodoTableContent() {
         skip,
         limit,
         title: titleFilter || undefined,
-        status: statusFilter || undefined,
-        context: contextFilter || undefined,
+        status: statusFilter === 'all' ? undefined : statusFilter,
+        context: contextFilter === 'all' ? undefined : contextFilter,
       }),
   });
 
@@ -175,7 +175,7 @@ function TodoTableContent() {
             <Select
               value={statusFilter}
               onValueChange={(v) => {
-                setStatusFilter(v as TodoStatus | '');
+                setStatusFilter(v as TodoStatus | 'all');
                 setSkip(0);
               }}
             >
@@ -183,7 +183,7 @@ function TodoTableContent() {
                 <SelectValue placeholder="상태 전체" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">상태 전체</SelectItem>
+                <SelectItem value="all">상태 전체</SelectItem>
                 <SelectItem value="todo">대기</SelectItem>
                 <SelectItem value="in_progress">진행중</SelectItem>
                 <SelectItem value="done">완료</SelectItem>
@@ -193,7 +193,7 @@ function TodoTableContent() {
             <Select
               value={contextFilter}
               onValueChange={(v) => {
-                setContextFilter(v as TodoContext | '');
+                setContextFilter(v as TodoContext | 'all');
                 setSkip(0);
               }}
             >
@@ -201,7 +201,7 @@ function TodoTableContent() {
                 <SelectValue placeholder="컨텍스트 전체" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">컨텍스트 전체</SelectItem>
+                <SelectItem value="all">컨텍스트 전체</SelectItem>
                 <SelectItem value="none">없음</SelectItem>
                 <SelectItem value="work">업무</SelectItem>
                 <SelectItem value="home">가정</SelectItem>
