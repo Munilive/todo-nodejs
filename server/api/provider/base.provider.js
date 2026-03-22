@@ -126,11 +126,9 @@ module.exports = class BaseProvider {
     let promise = null;
 
     if (this.isSingleResult) {
-      promise = this.schema
-        .findOne(this.conditions);
+      promise = this.schema.findOne(this.conditions);
     } else {
-      promise = this.schema
-        .find(this.conditions);
+      promise = this.schema.find(this.conditions);
     }
 
     this.populates.forEach((populate) => {
@@ -145,10 +143,7 @@ module.exports = class BaseProvider {
       promise.sort(this.sortField);
     }
 
-    return promise
-      .select(this.selectedField)
-      .skip(this.skipCnt)
-      .limit(this.limitCnt);
+    return promise.select(this.selectedField).skip(this.skipCnt).limit(this.limitCnt);
   }
 
   /**

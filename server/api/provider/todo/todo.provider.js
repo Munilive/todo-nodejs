@@ -3,7 +3,7 @@
 const _ = require('lodash');
 const rootRequire = require('root-require');
 const BaseProvider = require('../base.provider');
-const Todo = rootRequire('server/model/todo.model');
+const Todo = rootRequire('server/api/model/todo.model');
 
 const DEFAULT_SELECT = '-__v';
 
@@ -71,10 +71,11 @@ module.exports = class TodoProvider extends BaseProvider {
     }
 
     if (_.isNil(fields.startDueDate) === false && _.isNil(fields.endDueDate) === false) {
-      andQuery.push({ dueDate: {
-        $gte: getStartDate(fields.startDueDate),
-        $lte: getEndDate(fields.endDueDate),
-      },
+      andQuery.push({
+        dueDate: {
+          $gte: getStartDate(fields.startDueDate),
+          $lte: getEndDate(fields.endDueDate),
+        },
       });
       // this.conditions.dueDate = {
       //   $gte: getStartDate(fields.startDueDate),
@@ -83,10 +84,11 @@ module.exports = class TodoProvider extends BaseProvider {
     }
 
     if (_.isNil(fields.startDoneAt) === false && _.isNil(fields.endDueDate) === false) {
-      andQuery.push({ doneAt: {
-        $gte: getStartDate(fields.startDoneAt),
-        $lte: getEndDate(fields.endDoneAt),
-      },
+      andQuery.push({
+        doneAt: {
+          $gte: getStartDate(fields.startDoneAt),
+          $lte: getEndDate(fields.endDoneAt),
+        },
       });
       // this.conditions.doneAt = {
       //   $gte: getStartDate(fields.startDoneAt),
@@ -95,10 +97,11 @@ module.exports = class TodoProvider extends BaseProvider {
     }
 
     if (_.isNil(fields.startCreatedAt) === false && _.isNil(fields.endCreatedAt) === false) {
-      andQuery.push({ createdAt: {
-        $gte: getStartDate(fields.startCreatedAt),
-        $lte: getEndDate(fields.endCreatedAt),
-      },
+      andQuery.push({
+        createdAt: {
+          $gte: getStartDate(fields.startCreatedAt),
+          $lte: getEndDate(fields.endCreatedAt),
+        },
       });
       // this.conditions.createdAt = {
       //   $gte: getStartDate(fields.startCreatedAt),
@@ -111,5 +114,4 @@ module.exports = class TodoProvider extends BaseProvider {
     }
     return this;
   }
-
 };

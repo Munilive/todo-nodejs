@@ -83,7 +83,7 @@ module.exports = () => {
 
   app.use(serveStatic(app.get('appPath'), { index: 'index.html' }));
 
-  morgan(app);      // morgan 사용이전의 스태틱 파일에 대한 로그는 무시한다.
+  morgan(app); // morgan 사용이전의 스태틱 파일에 대한 로그는 무시한다.
   compression(app);
 
   // request body 사이즈를 100메가바이트로 설정

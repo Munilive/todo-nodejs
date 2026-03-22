@@ -5,10 +5,10 @@ const co = require('co');
 const _ = require('lodash');
 const todoValidate = require('../todo.validate');
 const rootRequire = require('root-require');
-const todoMessage = rootRequire('server/constants/todo.message');
-const NotFoundError = rootRequire('server/components/error').NotFoundError;
-const Todo = rootRequire('server/model/todo.model');
-const TodoProvider = rootRequire('server/provider/todo/todo.provider');
+const todoMessage = rootRequire('server/api/constants/todo.message');
+const NotFoundError = rootRequire('server/api/components/error').NotFoundError;
+const Todo = rootRequire('server/api/model/todo.model');
+const TodoProvider = rootRequire('server/api/provider/todo/todo.provider');
 
 /**
  * 할일 검색
@@ -16,11 +16,7 @@ const TodoProvider = rootRequire('server/provider/todo/todo.provider');
  * @returns {*}
  */
 function getTodo(todoId) {
-  return new TodoProvider()
-    .todoId(todoId)
-    .singleResult(true)
-    .lean()
-    .exec();
+  return new TodoProvider().todoId(todoId).singleResult(true).lean().exec();
 }
 
 /**

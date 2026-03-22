@@ -12,7 +12,7 @@ const _ = require('lodash');
  * @type {requireFromModuleRoot}
  */
 const rootRequire = require('root-require');
-const commonMessage = rootRequire('server/constants/common.message');
+const commonMessage = rootRequire('server/api/constants/common.message');
 const lang = require('./utils/lang');
 const EntityError = require('./error').EntityError;
 

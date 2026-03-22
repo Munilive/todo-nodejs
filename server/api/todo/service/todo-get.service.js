@@ -5,9 +5,9 @@ const _ = require('lodash');
 const co = require('co');
 const rootRequire = require('root-require');
 const todoValidate = require('../todo.validate');
-const todoMessage = rootRequire('server/constants/todo.message');
-const NotFoundError = rootRequire('server/components/error').NotFoundError;
-const TodoProvider = rootRequire('server/provider/todo/todo.provider');
+const todoMessage = rootRequire('server/api/constants/todo.message');
+const NotFoundError = rootRequire('server/api/components/error').NotFoundError;
+const TodoProvider = rootRequire('server/api/provider/todo/todo.provider');
 
 /**
  * 할일 가져오기

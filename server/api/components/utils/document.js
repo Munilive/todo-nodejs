@@ -30,7 +30,7 @@ function multiSave(docs) {
     const savingDocs = [];
     let fin = docs.length;
 
-    docs.forEach(doc => {
+    docs.forEach((doc) => {
       doc.save((err, saved) => {
         if (err) {
           reject(err);
@@ -129,7 +129,6 @@ function deactivate(doc) {
   }
   return doc;
 }
-
 
 /**
  * module.exports.*

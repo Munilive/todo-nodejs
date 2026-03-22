@@ -3,7 +3,7 @@
 const _ = require('lodash');
 const co = require('co');
 const rootRequire = require('root-require');
-const TodoProvider = rootRequire('server/provider/todo/todo.provider');
+const TodoProvider = rootRequire('server/api/provider/todo/todo.provider');
 const validate = require('../todo.validate');
 
 /**

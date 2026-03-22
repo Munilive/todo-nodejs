@@ -23,7 +23,7 @@ module.exports = {
     if (isNaN(source.getTime())) {
       throw new Error(WRONG_TYPEOF_DATE);
     }
-    return source.getFullYear() + (padZero(source.getMonth() + 1)) + padZero(source.getDate());
+    return source.getFullYear() + padZero(source.getMonth() + 1) + padZero(source.getDate());
   },
 
   /**
@@ -36,10 +36,12 @@ module.exports = {
     if (isNaN(source.getTime())) {
       throw new Error(WRONG_TYPEOF_DATE);
     }
-    return padZero(source.getHours())
-      + padZero(source.getMinutes())
-      + padZero(source.getSeconds())
-      + padZero(source.getMilliseconds());
+    return (
+      padZero(source.getHours()) +
+      padZero(source.getMinutes()) +
+      padZero(source.getSeconds()) +
+      padZero(source.getMilliseconds())
+    );
   },
 
   /**

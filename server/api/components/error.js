@@ -22,9 +22,7 @@ function formatEntityMessage(message, fieldName) {
  */
 class UnauthorizedError extends Error {
   constructor(message, fieldName, fileName, fileNumber) {
-    const msg = message
-      ? formatEntityMessage(message, fieldName)
-      : MESSAGE.UNAUTHORIZED;
+    const msg = message ? formatEntityMessage(message, fieldName) : MESSAGE.UNAUTHORIZED;
 
     super(msg, fileName, fileNumber);
 
@@ -38,9 +36,7 @@ class UnauthorizedError extends Error {
  */
 class NotFoundError extends Error {
   constructor(message, fieldName, fileName, fileNumber) {
-    const msg = message
-      ? formatEntityMessage(message, fieldName)
-      : MESSAGE.NOT_FOUND;
+    const msg = message ? formatEntityMessage(message, fieldName) : MESSAGE.NOT_FOUND;
 
     super(msg, fileName, fileNumber);
 
@@ -54,9 +50,7 @@ class NotFoundError extends Error {
  */
 class EntityError extends Error {
   constructor(message, fieldName, fileName, fileNumber) {
-    const msg = message
-      ? formatEntityMessage(message, fieldName)
-      : MESSAGE.UNPROCESSABLE_ENTITY;
+    const msg = message ? formatEntityMessage(message, fieldName) : MESSAGE.UNPROCESSABLE_ENTITY;
 
     super(msg, fileName, fileNumber);
 

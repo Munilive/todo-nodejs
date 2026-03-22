@@ -54,9 +54,9 @@ function getCombinations(array, limit) {
 function sortByIndexes(array, indexes) {
   const sortKey = Object.keys(indexes)[0];
   const sortValue = String(indexes[sortKey]);
-  return array.sort((a, b) => (
-    sortValue.indexOf(String(a[sortKey])) - sortValue.indexOf(String(b[sortKey]))
-  ));
+  return array.sort(
+    (a, b) => sortValue.indexOf(String(a[sortKey])) - sortValue.indexOf(String(b[sortKey])),
+  );
 }
 
 /**

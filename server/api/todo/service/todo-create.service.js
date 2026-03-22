@@ -4,7 +4,7 @@ const co = require('co');
 const _ = require('lodash');
 const validate = require('../todo.validate');
 const rootRequire = require('root-require');
-const Todo = rootRequire('server/model/todo.model');
+const Todo = rootRequire('server/api/model/todo.model');
 
 /**
  * 할일 생성

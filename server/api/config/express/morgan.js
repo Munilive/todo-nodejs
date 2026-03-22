@@ -20,7 +20,8 @@ const dateUtil = require('../../components/utils/date');
  * :res[content-length] -> response 크기
  * @type {string}
  */
-const MORGAN_OUTPUT = '[:currentMoment] :method :url :status :response-time ms - :res[content-length]';
+const MORGAN_OUTPUT =
+  '[:currentMoment] :method :url :status :response-time ms - :res[content-length]';
 
 /**
  * 리퀘스트 객체에 현재시간 추가
@@ -44,7 +45,7 @@ module.exports = (app) => {
   app.use(currentMomentPipe);
 
   // 모건 토큰에 현재 시간을 추가
-  morgan.token('currentMoment', req => req.currentMoment);
+  morgan.token('currentMoment', (req) => req.currentMoment);
 
   // 모건 로그 포멧을 입력
   app.use(morgan(MORGAN_OUTPUT));

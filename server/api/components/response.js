@@ -2,7 +2,7 @@
 
 const winston = require('winston');
 const rootRequire = require('root-require');
-const commonMessage = rootRequire('server/constants/common.message');
+const commonMessage = rootRequire('server/api/constants/common.message');
 
 /**
  * HTTP 응답은 JSON 타입의 데이터를 전달하는 것을 기본으로 한다.
@@ -31,11 +31,9 @@ function respondError(res, status, msg) {
   if (status === 500) {
     message = `${commonMessage.DEFAULT_ERROR}(${msg})`;
   }
-  return res
-    .status(status)
-    .json({
-      error: { status, message },
-    });
+  return res.status(status).json({
+    error: { status, message },
+  });
 }
 
 /**

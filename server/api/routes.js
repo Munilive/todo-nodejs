@@ -11,7 +11,7 @@ const NotFoundError = require('./components/error').NotFoundError;
 const response = require('./components/response');
 
 module.exports = (app) => {
-  app.use('/api/todo', require('./api/todo'));
+  app.use('/api/todo', require('./todo'));
 
   // 없는 api를 호출 하면 에러
   app.use('/api/*', () => {
