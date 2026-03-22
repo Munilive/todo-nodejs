@@ -21,9 +21,9 @@ async function bootstrap() {
   );
   app.useGlobalFilters(new AllExceptionsFilter());
 
-  const isProd = process.env['NODE_ENV'] === 'production';
+  const isSwaggerEnabled = process.env['ENABLE_SWAGGER'] === 'true';
 
-  if (!isProd) {
+  if (isSwaggerEnabled) {
     const swaggerConfig = new DocumentBuilder()
       .setTitle('Todo API')
       .setDescription('Todo 관리 API')
@@ -38,7 +38,7 @@ async function bootstrap() {
 
   const baseUrl = `http://localhost:${port}`;
   logger.log(`Server running on ${baseUrl}/api`);
-  if (!isProd) {
+  if (isSwaggerEnabled) {
     logger.log(`Swagger running on ${baseUrl}/api/docs`);
   }
 }
