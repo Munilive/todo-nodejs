@@ -10,6 +10,16 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, { bufferLogs: true });
   app.getHttpAdapter().getInstance().disable('x-powered-by');
 
+  const allowedOrigins = (process.env['CORS_ORIGINS'] ?? 'http://localhost:4321')
+    .split(',')
+    .map((o) => o.trim());
+  app.enableCors({
+    origin: allowedOrigins,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
+  });
+
   const logger = app.get(Logger);
   app.useLogger(logger);
   app.setGlobalPrefix('api', {
