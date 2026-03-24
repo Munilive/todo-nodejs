@@ -36,8 +36,14 @@ describe('TodoService', () => {
     getEntityManager: vi.fn().mockReturnValue(mockEm),
   };
 
+  const mockReminderRepo = {
+    find: vi.fn().mockResolvedValue([]),
+    create: vi.fn(),
+  };
+
   beforeEach(async () => {
     vi.clearAllMocks();
+    mockReminderRepo.find.mockResolvedValue([]);
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [TodoService, { provide: TODO_REPO_TOKEN, useValue: mockRepo }],
@@ -45,7 +51,10 @@ describe('TodoService', () => {
       .overrideProvider(TodoService)
       .useFactory({
         factory: () =>
-          new (TodoService as unknown as new (repo: typeof mockRepo) => TodoService)(mockRepo),
+          new (TodoService as unknown as new (
+            repo: typeof mockRepo,
+            reminderRepo: typeof mockReminderRepo,
+          ) => TodoService)(mockRepo, mockReminderRepo),
       })
       .compile();
 
