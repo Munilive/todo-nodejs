@@ -8,7 +8,8 @@ import { getTodos } from '@/lib/api';
 import type { TodoListItem, TodoStatus, TodoContext } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
+import { Badge, badgeVariants } from '@/components/ui/badge';
+import type { VariantProps } from 'class-variance-authority';
 import {
   Select,
   SelectContent,
@@ -65,7 +66,7 @@ function TodoTableContent() {
       accessorKey: 'status',
       header: '상태',
       cell: ({ row }) => (
-        <Badge variant={`status-${row.original.status}` as any}>
+        <Badge variant={`status-${row.original.status}` as VariantProps<typeof badgeVariants>['variant']}>
           {STATUS_LABELS[row.original.status]}
         </Badge>
       ),
@@ -74,7 +75,7 @@ function TodoTableContent() {
       accessorKey: 'context',
       header: '컨텍스트',
       cell: ({ row }) => (
-        <Badge variant={`context-${row.original.context}` as any}>
+        <Badge variant={`context-${row.original.context}` as VariantProps<typeof badgeVariants>['variant']}>
           {CONTEXT_LABELS[row.original.context]}
         </Badge>
       ),
