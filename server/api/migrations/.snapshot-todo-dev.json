@@ -1,8 +1,6 @@
 {
   "name": "public",
-  "namespaces": [
-    "public"
-  ],
+  "namespaces": ["public"],
   "tables": [
     {
       "name": "todo",
@@ -53,11 +51,7 @@
           "scale": null,
           "default": "'todo'",
           "comment": null,
-          "enumItems": [
-            "todo",
-            "in_progress",
-            "done"
-          ],
+          "enumItems": ["todo", "in_progress", "done"],
           "mappedType": "enum"
         },
         "context": {
@@ -73,11 +67,7 @@
           "scale": null,
           "default": "'none'",
           "comment": null,
-          "enumItems": [
-            "none",
-            "work",
-            "home"
-          ],
+          "enumItems": ["none", "work", "home"],
           "mappedType": "enum"
         },
         "due_date": {
@@ -131,9 +121,7 @@
       },
       "indexes": [
         {
-          "columnNames": [
-            "id"
-          ],
+          "columnNames": ["id"],
           "composite": false,
           "constraint": false,
           "keyName": "todo_pkey",
@@ -224,11 +212,7 @@
           "scale": null,
           "default": null,
           "comment": null,
-          "enumItems": [
-            "minute",
-            "hour",
-            "day"
-          ],
+          "enumItems": ["minute", "hour", "day"],
           "mappedType": "enum"
         },
         "remind_at": {
@@ -282,9 +266,7 @@
       },
       "indexes": [
         {
-          "columnNames": [
-            "id"
-          ],
+          "columnNames": ["id"],
           "composite": false,
           "constraint": false,
           "keyName": "todo_reminder_pkey",
@@ -302,15 +284,11 @@
       ],
       "foreignKeys": {
         "todo_reminder_todo_id_foreign": {
-          "columnNames": [
-            "todo_id"
-          ],
+          "columnNames": ["todo_id"],
           "constraintName": "todo_reminder_todo_id_foreign",
           "localTableName": "public.todo_reminder",
           "referencedTableName": "public.todo",
-          "referencedColumnNames": [
-            "id"
-          ],
+          "referencedColumnNames": ["id"],
           "updateRule": "no action",
           "deleteRule": "no action"
         }
