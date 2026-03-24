@@ -1,11 +1,6 @@
 import { useState } from 'react';
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
-import {
-  useReactTable,
-  getCoreRowModel,
-  flexRender,
-  type ColumnDef,
-} from '@tanstack/react-table';
+import { useReactTable, getCoreRowModel, flexRender, type ColumnDef } from '@tanstack/react-table';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { Plus, ChevronLeft, ChevronRight, Eye } from 'lucide-react';
@@ -14,8 +9,14 @@ import type { TodoListItem, TodoStatus, TodoContext } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Card, CardContent } from '@/components/ui/card';
 
 const queryClient = new QueryClient();
 
@@ -40,7 +41,10 @@ function TodoTableContent() {
   const [titleInput, setTitleInput] = useState('');
 
   const { data, isLoading } = useQuery({
-    queryKey: ['todos', { skip, limit, title: titleFilter, status: statusFilter, context: contextFilter }],
+    queryKey: [
+      'todos',
+      { skip, limit, title: titleFilter, status: statusFilter, context: contextFilter },
+    ],
     queryFn: () =>
       getTodos({
         skip,
@@ -55,9 +59,7 @@ function TodoTableContent() {
     {
       accessorKey: 'title',
       header: '제목',
-      cell: ({ row }) => (
-        <span className="font-medium">{row.original.title}</span>
-      ),
+      cell: ({ row }) => <span className="font-medium">{row.original.title}</span>,
     },
     {
       accessorKey: 'status',
@@ -150,8 +152,7 @@ function TodoTableContent() {
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold">할일 목록</h2>
         <Button onClick={() => (window.location.href = '/todo/new')}>
-          <Plus className="h-4 w-4 mr-2" />
-          새 할일
+          <Plus className="h-4 w-4 mr-2" />새 할일
         </Button>
       </div>
 

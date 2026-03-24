@@ -1,5 +1,11 @@
 import { useState, useEffect } from 'react';
-import { QueryClient, QueryClientProvider, useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { Plus, Trash2, ArrowLeft } from 'lucide-react';
 import { getTodo, createTodo, updateTodo } from '@/lib/api';
@@ -7,9 +13,14 @@ import type { TodoStatus, TodoContext, ReminderOffsetUnit, ReminderInput } from 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
 
 const queryClient = new QueryClient();
 
@@ -217,7 +228,9 @@ function TodoFormContent({ id }: Props) {
                   />
                   <Select
                     value={reminder.offsetUnit}
-                    onValueChange={(v) => updateReminder(index, 'offsetUnit', v as ReminderOffsetUnit)}
+                    onValueChange={(v) =>
+                      updateReminder(index, 'offsetUnit', v as ReminderOffsetUnit)
+                    }
                   >
                     <SelectTrigger className="w-28">
                       <SelectValue />

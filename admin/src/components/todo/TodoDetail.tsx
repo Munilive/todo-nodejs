@@ -7,7 +7,8 @@ import { ArrowLeft, Edit, Trash2, Bell, SendHorizonal } from 'lucide-react';
 import { getTodo, deleteTodo, deleteReminder, notifyReminder } from '@/lib/api';
 import type { TodoStatus, TodoContext, Reminder } from '@/lib/types';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
+import { Badge, badgeVariants } from '@/components/ui/badge';
+import type { VariantProps } from 'class-variance-authority';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import {
@@ -169,13 +170,13 @@ function TodoDetailContent({ id }: Props) {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <p className="text-sm text-muted-foreground mb-1">상태</p>
-              <Badge variant={`status-${todo.status}` as any}>
+              <Badge variant={`status-${todo.status}` as VariantProps<typeof badgeVariants>['variant']}>
                 {STATUS_LABELS[todo.status]}
               </Badge>
             </div>
             <div>
               <p className="text-sm text-muted-foreground mb-1">컨텍스트</p>
-              <Badge variant={`context-${todo.context}` as any}>
+              <Badge variant={`context-${todo.context}` as VariantProps<typeof badgeVariants>['variant']}>
                 {CONTEXT_LABELS[todo.context]}
               </Badge>
             </div>
