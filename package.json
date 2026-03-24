@@ -10,6 +10,7 @@
     "test": "pnpm -r test",
     "test:coverage": "pnpm --filter @todo-nodejs/server test:coverage",
     "lint": "eslint .",
+    "lint:fix": "eslint . --fix && prettier --write .",
     "format": "prettier --write .",
     "prepare": "husky"
   },
