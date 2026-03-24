@@ -1,5 +1,11 @@
 import { useState } from 'react';
-import { QueryClient, QueryClientProvider, useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { toast } from 'sonner';
@@ -52,7 +58,11 @@ function TodoDetailContent({ id }: Props) {
   const [reminderToDelete, setReminderToDelete] = useState<string | null>(null);
   const [reminderToNotify, setReminderToNotify] = useState<string | null>(null);
 
-  const { data: todo, isLoading, isError } = useQuery({
+  const {
+    data: todo,
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey: ['todo', id],
     queryFn: () => getTodo(id),
   });
@@ -117,12 +127,7 @@ function TodoDetailContent({ id }: Props) {
   if (isEditMode) {
     return (
       <div>
-        <Button
-          variant="ghost"
-          size="sm"
-          className="mb-4"
-          onClick={() => setIsEditMode(false)}
-        >
+        <Button variant="ghost" size="sm" className="mb-4" onClick={() => setIsEditMode(false)}>
           <ArrowLeft className="h-4 w-4 mr-1" />
           취소
         </Button>
@@ -170,13 +175,17 @@ function TodoDetailContent({ id }: Props) {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <p className="text-sm text-muted-foreground mb-1">상태</p>
-              <Badge variant={`status-${todo.status}` as VariantProps<typeof badgeVariants>['variant']}>
+              <Badge
+                variant={`status-${todo.status}` as VariantProps<typeof badgeVariants>['variant']}
+              >
                 {STATUS_LABELS[todo.status]}
               </Badge>
             </div>
             <div>
               <p className="text-sm text-muted-foreground mb-1">컨텍스트</p>
-              <Badge variant={`context-${todo.context}` as VariantProps<typeof badgeVariants>['variant']}>
+              <Badge
+                variant={`context-${todo.context}` as VariantProps<typeof badgeVariants>['variant']}
+              >
                 {CONTEXT_LABELS[todo.context]}
               </Badge>
             </div>
@@ -188,9 +197,7 @@ function TodoDetailContent({ id }: Props) {
             <div>
               <p className="text-sm text-muted-foreground mb-1">마감일</p>
               <p className="text-sm">
-                {todo.dueDate
-                  ? format(new Date(todo.dueDate), 'yyyy-MM-dd', { locale: ko })
-                  : '-'}
+                {todo.dueDate ? format(new Date(todo.dueDate), 'yyyy-MM-dd', { locale: ko }) : '-'}
               </p>
             </div>
             <div>
@@ -227,10 +234,16 @@ function TodoDetailContent({ id }: Props) {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b">
-                    <th className="px-3 py-2 text-left font-medium text-muted-foreground">알림 시점</th>
-                    <th className="px-3 py-2 text-left font-medium text-muted-foreground">발송 예정일시</th>
+                    <th className="px-3 py-2 text-left font-medium text-muted-foreground">
+                      알림 시점
+                    </th>
+                    <th className="px-3 py-2 text-left font-medium text-muted-foreground">
+                      발송 예정일시
+                    </th>
                     <th className="px-3 py-2 text-left font-medium text-muted-foreground">상태</th>
-                    <th className="px-3 py-2 text-left font-medium text-muted-foreground">발송일시</th>
+                    <th className="px-3 py-2 text-left font-medium text-muted-foreground">
+                      발송일시
+                    </th>
                     <th className="px-3 py-2 text-left font-medium text-muted-foreground">액션</th>
                   </tr>
                 </thead>
@@ -238,7 +251,8 @@ function TodoDetailContent({ id }: Props) {
                   {todo.reminders.map((reminder) => (
                     <tr key={reminder.id} className="border-b">
                       <td className="px-3 py-2">
-                        {reminder.offsetValue}{OFFSET_UNIT_LABELS[reminder.offsetUnit]} 전
+                        {reminder.offsetValue}
+                        {OFFSET_UNIT_LABELS[reminder.offsetUnit]} 전
                       </td>
                       <td className="px-3 py-2">
                         {format(new Date(reminder.remindAt), 'yyyy-MM-dd HH:mm', { locale: ko })}
@@ -250,7 +264,9 @@ function TodoDetailContent({ id }: Props) {
                       </td>
                       <td className="px-3 py-2">
                         {reminder.notifiedAt
-                          ? format(new Date(reminder.notifiedAt), 'yyyy-MM-dd HH:mm', { locale: ko })
+                          ? format(new Date(reminder.notifiedAt), 'yyyy-MM-dd HH:mm', {
+                              locale: ko,
+                            })
                           : '-'}
                       </td>
                       <td className="px-3 py-2">
@@ -308,7 +324,10 @@ function TodoDetailContent({ id }: Props) {
       </Dialog>
 
       {/* Delete reminder dialog */}
-      <Dialog open={reminderToDelete !== null} onOpenChange={(open) => !open && setReminderToDelete(null)}>
+      <Dialog
+        open={reminderToDelete !== null}
+        onOpenChange={(open) => !open && setReminderToDelete(null)}
+      >
         <DialogContent>
           <DialogHeader>
             <DialogTitle>알림 삭제</DialogTitle>
@@ -330,7 +349,10 @@ function TodoDetailContent({ id }: Props) {
       </Dialog>
 
       {/* Force notify dialog */}
-      <Dialog open={reminderToNotify !== null} onOpenChange={(open) => !open && setReminderToNotify(null)}>
+      <Dialog
+        open={reminderToNotify !== null}
+        onOpenChange={(open) => !open && setReminderToNotify(null)}
+      >
         <DialogContent>
           <DialogHeader>
             <DialogTitle>알림 강제 발송</DialogTitle>

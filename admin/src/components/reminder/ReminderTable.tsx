@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { QueryClient, QueryClientProvider, useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import {
-  useReactTable,
-  getCoreRowModel,
-  flexRender,
-  type ColumnDef,
-} from '@tanstack/react-table';
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query';
+import { useReactTable, getCoreRowModel, flexRender, type ColumnDef } from '@tanstack/react-table';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { toast } from 'sonner';
@@ -15,7 +16,13 @@ import type { ReminderListItem, ReminderStatus } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import {
@@ -332,7 +339,10 @@ function ReminderTableContent() {
       </Card>
 
       {/* Delete reminder dialog */}
-      <Dialog open={reminderToDelete !== null} onOpenChange={(open) => !open && setReminderToDelete(null)}>
+      <Dialog
+        open={reminderToDelete !== null}
+        onOpenChange={(open) => !open && setReminderToDelete(null)}
+      >
         <DialogContent>
           <DialogHeader>
             <DialogTitle>알림 삭제</DialogTitle>

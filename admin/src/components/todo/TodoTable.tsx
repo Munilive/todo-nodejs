@@ -66,7 +66,9 @@ function TodoTableContent() {
       accessorKey: 'status',
       header: '상태',
       cell: ({ row }) => (
-        <Badge variant={`status-${row.original.status}` as VariantProps<typeof badgeVariants>['variant']}>
+        <Badge
+          variant={`status-${row.original.status}` as VariantProps<typeof badgeVariants>['variant']}
+        >
           {STATUS_LABELS[row.original.status]}
         </Badge>
       ),
@@ -75,7 +77,11 @@ function TodoTableContent() {
       accessorKey: 'context',
       header: '컨텍스트',
       cell: ({ row }) => (
-        <Badge variant={`context-${row.original.context}` as VariantProps<typeof badgeVariants>['variant']}>
+        <Badge
+          variant={
+            `context-${row.original.context}` as VariantProps<typeof badgeVariants>['variant']
+          }
+        >
           {CONTEXT_LABELS[row.original.context]}
         </Badge>
       ),
