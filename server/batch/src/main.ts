@@ -9,4 +9,7 @@ async function bootstrap() {
   app.useLogger(app.get(Logger));
 }
 
-bootstrap();
+bootstrap().catch((err) => {
+  console.error('Batch 앱 시작 실패:', err);
+  process.exit(1);
+});
