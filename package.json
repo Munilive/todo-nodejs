@@ -22,8 +22,8 @@
     ]
   },
   "devDependencies": {
-    "@munilive/eslint-config": "^1.0.3",
-    "@munilive/prettier-config": "^1.0.3",
+    "@munilive/eslint-config": "^1.0.4",
+    "@munilive/prettier-config": "^1.1.0",
     "eslint": "^10.1.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.4.0",
